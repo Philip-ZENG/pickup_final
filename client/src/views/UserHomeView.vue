@@ -33,7 +33,6 @@
         </td>
         <td align="center" width="20%"> <!--date bar-->
           <div>
-
             <datepicker v-model="dateinput" placeholder="Select Date" iconColor="purple">
             </datepicker>
             <button @click="searchByDate">search</button>
@@ -45,7 +44,6 @@
     <div class="actSquare"> <!-- activity square-->
       <dl>
         <dt v-for="(act, index) in shownActivity" :key="index">
-
           <activity-card :time="dateToString(new Date(act.time))" :title="act.title"
             :description="act.description" @click="showDetail(index)">
           </activity-card>
@@ -61,7 +59,6 @@
         </select>
       </div>
     </div>
-
     <!-- detail card-->
     <!--eslint-disable-next-line -->
     <div class="cardOut" v-show="cardSelected" @click="cardSelected = false"></div>
@@ -72,9 +69,8 @@
             <td width="30%">type: {{Object(shownActivity[chosenIndex]).type}}</td>
             <td width="45%">title: {{Object(shownActivity[chosenIndex]).title}}</td>
           </tr>
-
            <tr width="100%" height="50px"> <!-- second row-->
-            <td>number:{{Object(shownActivity[chosenIndex]).quota_left}} /
+            <td>number:{{Object(shownActivity[chosenIndex]).max_capacity - Object(shownActivity[chosenIndex]).quota_left}} /
               {{Object(shownActivity[chosenIndex]).max_capacity}}</td>
             <td>Loc: {{Object(shownActivity[chosenIndex]).location}}</td>
             <td>Time: {{dateToString(new Date(Object(shownActivity[chosenIndex]).time))}}</td>
@@ -179,7 +175,7 @@ export default {
     },
 
     tryPost() {
-      if (this.userId == null) {
+      if (this.userId === null || this.userId === 0) {
         alert('please first log in');
         this.switchTo('/login')
       }
@@ -272,7 +268,7 @@ export default {
 
     //for user to join a certain activity he/her is interested in
     tryJoin() {
-      if (this.userId === null) {
+      if (this.userId === null || this.userId === 0) {
         alert('Please first login!');
         this.switchTo('/login');
       }else{
