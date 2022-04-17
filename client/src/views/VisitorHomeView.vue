@@ -5,6 +5,9 @@
     <br>
     <br>
     <button @click="goToRegister">Register</button>
+    <br>
+    <br>
+    <button @click="goToHomeAsGuest">Visit As Guest</button>
   </section>
 </template>
 
@@ -16,6 +19,10 @@ export default {
     },
     goToRegister() {
       this.$router.push('/register');
+    },
+    goToHomeAsGuest() {
+      this.$store.dispatch('setIsGuest', { isGuest: true });
+      this.$router.push('/userHome');
     },
   },
 };

@@ -3,11 +3,16 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const mysql = require("mysql");
 const morgan = require("morgan");
+const nodemailer = require("nodemailer");
+const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
+const auth = require("./auth");
 
 const app = express();
 
 app.use(morgan("tiny"));
 app.use(cors());
+app.use(cookieParser);
 app.use(bodyParser.json());
 
 var loginVerification = false;
@@ -45,11 +50,51 @@ app.post("/register", function (req, res) {
 
   console.log(person);
 
-  // Insert the data into database, the syntax comes from the mysql.js package
-  var q = "INSERT INTO accountInfo SET ?";
-  connection.query(q, person, function (err, result) {
-    if (err) throw err;
-  });
+  // var q = "INSERT INTO accountInfo SET ?";
+  // connection.query(q, person, function (err, result) {
+  //   if (err) throw err;
+  // });
+});
+
+app.get('/verify', function(req,res){
+
+  console.log(req.protocol+":/"+req.get('host'));
+  if((req.protocol+"://"+req.get('host'))==("http://"+host)){
+      console.log("Domain is matched. Information is from Authentic email");
+      if(req.query.id==rand)
+      {
+          console.log("email is verified");
+
+          // encryptedPassword = bcrypt.hash(person.password, 10);
+          // person.password = encryptedPassword;
+
+          var q = "INSERT INTO accountInfo SET ?";
+          connection.query(q, person, function (err, result) {
+          if (err) throw err;
+          });
+          console.log(person.email);
+          console.log(person.password);
+
+          // const token = jwt.sign(person.email, jwtKey, {
+          //   algorithm: "HS256",
+          //   expiresIn: "2h",
+          // });
+          
+          // res.cookie("token", token, { maxAge: 1000*60*60 });
+          res.redirect('http://localhost:8080/');
+          // console.log(token);
+          // res.end("Email "+mailOptions.to+" is been Successfully verified");
+      }
+      else
+      {
+          console.log("email is not verified");
+          res.end("Bad Request");
+      }
+  }
+  else
+    {
+        res.end("Request is from unknown source");
+    }
 });
 
 
@@ -64,12 +109,19 @@ app.post("/login", function (req, res) {
   var sql = "SELECT password FROM ?? WHERE ?? = ?";
   var inserts = ['accountInfo', 'email', person.email];
   sql = mysql.format(sql, inserts);
-
   connection.query(sql, person, function(err, result){
 
     var password = result[0].password;
     if(password = person.password){
-      loginVerification = true;
+        pack.verificationResult = true;
+
+        // const token = jwt.sign(person.email, jwtKey, {
+        //   algorithm: "HS256",
+        //   expiresIn: "2h",
+        // });
+  
+        // res.cookie("token", token, { maxAge: 1000*60*60 });
+        res.redirect('/');
     }
     else{
       loginVerification = false;
