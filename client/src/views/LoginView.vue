@@ -48,14 +48,14 @@ export default {
     },
     // Login successfully as user
     userLogin() {
-      // set 成 login
-      this.$store.dispatch('setIsLogIn');
+
+      this.$store.dispatch('setIsLogIn', { isLogIn: true });
       this.$store.dispatch('setIsUser', { isUser: true });
       this.$router.push('/userHome');
     },
     // login successfully as admin
     adminLogin() {
-      this.$store.dispatch('setIsLogIn');
+      this.$store.dispatch('setIsLogIn', { isLogIn: true });
       this.$store.dispatch('setIsUser', { isUser: false });
       this.$router.push('/adminConsole');
     },

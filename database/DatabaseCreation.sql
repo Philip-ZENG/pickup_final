@@ -20,7 +20,8 @@ CREATE TABLE user_info
     user_name VARCHAR(255) NOT NULL,
     gender VARCHAR(20),
     contact_info VARCHAR(20),
-    personal_intro VARCHAR(255)
+    personal_intro VARCHAR(255),
+    profile_photo VARCHAR(255)
 );
 
 
@@ -33,9 +34,16 @@ CREATE TABLE activity_info
     time DATETIME NOT NULL,
     location VARCHAR(255),
     description VARCHAR(255),
-    max_capacity INT NOT NULL ,
+    max_capacity INT NOT NULL,
     quota_left INT,
-    type VARCHAR(255) NOT NULL ,
-    heat INT,
-    status BIT DEFAULT 1
+    type VARCHAR(255) NOT NULL
+);
+
+
+-- Admin Account database
+CREATE TABLE admin_account
+(
+    admin_id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    admin_email VARCHAR(255) UNIQUE NOT NULL,
+    admin_password VARCHAR(255) NOT NULL
 );
