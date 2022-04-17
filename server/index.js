@@ -69,10 +69,14 @@ app.post("/login", function (req, res) {
 
     var password = result[0].password;
     if(password = person.password){
-      loginVerification = true;
+      res.json({
+        verificationResult: true,
+      });
     }
     else{
-      loginVerification = false;
+      res.json({
+        verificationResult: false,
+      });
     }
   });
 });
