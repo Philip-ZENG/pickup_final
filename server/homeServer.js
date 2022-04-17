@@ -12,10 +12,14 @@ app.use(bodyParser.json());
 
 // Connecting to the AWS RDS mySQL server
 var connection = mysql.createConnection({
-  host: "database-2.c0pbv8ca91j5.us-east-1.rds.amazonaws.com",
-  user: "admin",
-  password: "qweasdzxc",
-  database: "pickup",
+  // host: "database-2.c0pbv8ca91j5.us-east-1.rds.amazonaws.com",
+  // user: "admin",
+  // password: "qweasdzxc",
+  // database: "pickup",
+  host: '127.0.0.1',
+  user: 'root',
+  password: '123321',
+  database: 'pickup',
 });
 
 // Connet to mysql
@@ -101,7 +105,7 @@ function getMemberList(activity_id, callback){
 
 //get the profile information for a certain user
 function getUserProfile(user_id, callback){
-  var q = 'SELECT `profile` from user_info WHERE user_id = ?';
+  var q = 'SELECT `profile_photo` from user_info WHERE user_id = ?';
   connection.query({
     sql:q,
     values: [user_id]
@@ -131,12 +135,14 @@ async function pack_profile_info(activity_id){
 
   const memberList = await myPromise1(activity_id);
   const managerProfile = await myPromise2(memberList[0][0]);
-  result[0].push(Number(managerProfile.profile));
+  result[0].push(managerProfile.profile_photo);
   for(var i = 0; i < memberList[1].length; i++){
     const memberProfile = await myPromise2(memberList[1][i]);
-    result[1].push(Number(memberProfile.profile));
+    result[1].push(memberProfile.profile_photo);
   }
-  return result;
+
+  var pack = { idList: memberList, profileList: result};
+  return pack;
 }
 
 //return the members' profile information
@@ -149,6 +155,14 @@ app.post('/activityMember', function(req, res){
       console.log("error");
     });
 });
+
+app.post('/joinActivity', function(req, res){
+  var q = "INSERT INTO activity_user VALUES(?,?,'MEMBER')";
+  connection.query({
+    sql: q,
+    values: [req.body.activity_id, req.body.user_id]
+  })
+})
 
 const port = process.env.PORT || 4000;
 

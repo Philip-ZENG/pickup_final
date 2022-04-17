@@ -3,10 +3,10 @@
     <table class="showTable" cellspacing="0" cellpadding="0" align="center">
       <tr height="100px"> <!--first row-->
         <td id="swip" align="center" colspan="2" border="1px">
-          <span>{{dateinput}}</span>
+          <span>{{userId}}</span>
         </td>
         <td id="create" align="center">
-          <button id = "createNew" @click="switchTo('/activityCreation')">
+          <button id = "createNew" @click="tryPost">
           + Post a new event</button>
         </td>
       </tr>
@@ -33,18 +33,18 @@
         </td>
         <td align="center" width="20%"> <!--date bar-->
           <div>
-            <datepicker v-model="dateinput" placeholder="Select Date" iconColor="purple"></datepicker>
+            <datepicker v-model="dateinput" placeholder="Select Date" iconColor="purple">
+            </datepicker>
             <button @click="searchByDate">search</button>
           </div>
         </td>
-        
       </tr>
     </table>
 
     <div class="actSquare"> <!-- activity square-->
       <dl>
         <dt v-for="(act, index) in shownActivity" :key="index">
-          <activity-card :time="dateToString(new Date(act.time))" :title="act.title" 
+          <activity-card :time="dateToString(new Date(act.time))" :title="act.title"
             :description="act.description" @click="showDetail(index)">
           </activity-card>
         </dt>
@@ -59,22 +59,31 @@
         </select>
       </div>
     </div>
-
-    <div class="cardOut" v-show="cardSelected" @click="cardSelected = false"></div> <!-- detail card-->
+    <!-- detail card-->
+    <!--eslint-disable-next-line -->
+    <div class="cardOut" v-show="cardSelected" @click="cardSelected = false"></div>
       <div class="detailCard" v-show="cardSelected">
         <table width="90%" height="90%" padding="5%" cellspacing="0" cellpadding="0" align="center">
-          <tr width="100%" height="50px">
-            <td width="25%"> organizer photo </td>
+          <tr width="100%" height="50px"> <!-- first row-->
+            <td width="25%">{{shownMemberList[0][0]}}</td>
             <td width="30%">type: {{Object(shownActivity[chosenIndex]).type}}</td>
             <td width="45%">title: {{Object(shownActivity[chosenIndex]).title}}</td>
           </tr>
-           <tr width="100%" height="50px">
-            <td>number:{{Object(shownActivity[chosenIndex]).quota_left}} / {{Object(shownActivity[chosenIndex]).max_capacity}}</td>
+           <tr width="100%" height="50px"> <!-- second row-->
+            <td>number:{{Object(shownActivity[chosenIndex]).quota_left}} /
+              {{Object(shownActivity[chosenIndex]).max_capacity}}</td>
             <td>Loc: {{Object(shownActivity[chosenIndex]).location}}</td>
             <td>Time: {{dateToString(new Date(Object(shownActivity[chosenIndex]).time))}}</td>
           </tr>
-          <tr width="100%" height="50px">
-            <td colspan="3">{{Object(shownActivity[chosenIndex]).activity_id}}</td>
+          <tr width="100%" height="50px"> <!-- second row-->
+            <td colspan="3" align="center">
+              <div v-for="(member,index) in shownMemberList[1]" :key="index"
+                style="width:20px; height:20px; float:left">
+                {{member}}
+              </div>
+              <!--eslint-disable-next-line -->
+              <div style="border:solid; border-radius:50%; height:20px; width:20px; float:left" @click="tryJoin">+</div>
+            </td>
           </tr>
           <tr>
             <td colspan="3">{{Object(shownActivity[chosenIndex]).description}}</td>
@@ -99,7 +108,6 @@ export default {
 
   data() {
     return {
-      userId: '1',
       searchOrder: '',
       searchType: 'type',
       actInformation: [], // store the activity information
@@ -111,10 +119,15 @@ export default {
       maxNum: null,
       cardSelected: false,
       chosenIndex: 0,
+      memberIdList: null,
+      memberProfileList: null,
     };
   },
 
   computed: {
+    userId() {
+      return Number(this.$store.getters.getUserId);
+    },
     //calculate the total number of pages
     totalActivityNum() {
       return this.actInformation.length;
@@ -142,6 +155,11 @@ export default {
       }
       return res;
     },
+
+    shownMemberList() {
+      if (this.memberIdList === null) return [[0],[0]];
+      return this.memberIdList;
+    }
   },
 
   watch: {
@@ -156,6 +174,15 @@ export default {
       this.$router.replace(path);
     },
 
+    tryPost() {
+      if (this.userId == null) {
+        alert('please first log in');
+        this.switchTo('/login')
+      }
+      else this.switchTo('/activityCreation');
+    },
+
+    //search for activity given certain type or title
     searchActivity() {
       axios.post(
         'http://localhost:4000/searchActivity',
@@ -169,7 +196,7 @@ export default {
         });
     },
 
-    //ask for activity infromation
+    //get activity infromation from database
     askInfo() {
       axios.post(
         'http://localhost:4000/getActivityInfo',
@@ -197,7 +224,7 @@ export default {
         });
     },
 
-    //change the Date() form to string form
+    //change the Date() form variable to string form
     dateToString(date) {
       const year = date.getFullYear();
       let month = (date.getMonth() + 1).toString();
@@ -221,7 +248,8 @@ export default {
         'http://localhost:4000/activityMember',
         { activity_id: act.activity_id}
       ).then((response) => {
-        console.log(response.data);
+        this.memberIdList = response.data.idList;
+        this.memberProfileList = response.data.profileList;
       }).catch((error) => {
         console.log(err);
       });
@@ -236,6 +264,33 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+    },
+
+    //for user to join a certain activity he/her is interested in
+    tryJoin() {
+      if (this.userId === null) {
+        alert('Please first login!');
+        this.switchTo('/login');
+      }else{
+        if (this.memberIdCheck()){
+          alert('You have already participated in the activity!')
+          return;
+        }
+        else{
+          axios.post(
+            'http://localhost:4000/joinActivity',
+            { activity_id:this.shownActivity[this.chosenIndex].activity_id, user_id: this.userId}
+          );
+        }
+      }
+    },
+
+    memberIdCheck() {
+      if (this.memberIdList[0][0] === this.userId) return true;
+      for (var i = 0; i < this.memberIdList[1].length; i++) {
+        if(this.memberIdList[1][i] === this.userId) return true;
+      }
+      return false;
     },
 
     printOut(a) {
