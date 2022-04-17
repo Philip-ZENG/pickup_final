@@ -6,11 +6,13 @@ const morgan = require("morgan");
 const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
+const auth = require("./auth");
 
 const app = express();
 
 app.use(morgan("tiny"));
 app.use(cors());
+app.use(cookieParser);
 app.use(bodyParser.json());
 
 // Connecting to the local mySQL server
@@ -159,6 +161,14 @@ app.post("/login", function (req, res) {
     
     if(password = person.password){
         pack.verificationResult = true;
+
+        // const token = jwt.sign(person.email, jwtKey, {
+        //   algorithm: "HS256",
+        //   expiresIn: "2h",
+        // });
+  
+        // res.cookie("token", token, { maxAge: 1000*60*60 });
+        // res.redirect('/');
     }
     else{
         pack.verificationResult = false
