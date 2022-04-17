@@ -115,11 +115,8 @@ app.get('/verify', function(req,res){
           // });
           
           // res.cookie("token", token, { maxAge: 1000*60*60 });
-          console.log("redirect");
-          res.redirect('/');
+          res.redirect('http://localhost:8080/');
           // console.log(token);
-          
-          console.log("EmailOption");
           // res.end("Email "+mailOptions.to+" is been Successfully verified");
       }
       else
@@ -143,9 +140,6 @@ app.post("/login", function (req, res) {
   var sql = "SELECT * FROM ?? WHERE ?? = ?";
   var inserts = ['user_info', 'email', person.email];
   sql = mysql.format(sql, inserts);
-  
-  
-  // 获取user_id 并传回LoginView.vue
   
   connection.query(sql, person, function(err, result){
     
