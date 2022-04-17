@@ -25,6 +25,7 @@ connection.connect(function (err) {
 
 //fetch available activity from database
 app.post("/getActivityInfo", function (req, res) {
+  console.log("ok");
   var q = "SELECT * FROM activity_info WHERE time > now();";
   connection.query({
     sql:q,
