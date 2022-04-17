@@ -90,39 +90,8 @@ app.get("/login", function (req, res) {
   }
 });
 
-// Web site will get the latest registered email
-app.get("/getEmail", function (req, res) {
-    var q = "SELECT email AS email FROM accountInfo ORDER BY id DESC LIMIT 1";
-    connection.query(q, function (err, result) {
-      if (err) throw err;
-      var email = result[0].email;
-      // Render the target page with given file, we don't know how long it take to do the query
-      // To make sure the render executes after query finishes
-      // We can pass in data to the ejs file here
-      res.json({
-        email_address: email,
-      });
-    });
-});
-
-
 // when "/" page is requested, the callback function is called, called routing, usually we send out a page (html) file
 // Client gets something from the server
-app.get("/getCount", function (req, res) {
-  // Find count of user in DB
-  var q = "SELECT COUNT(*) AS count FROM accountInfo";
-  connection.query(q, function (err, result) {
-    if (err) throw err;
-    var count = result[0].count;
-    // Render the target page with given file, we don't know how long it take to do the query
-    // To make sure the render executes after query finishes
-    // We can pass in data to the ejs file here
-    res.json({
-      numberOfRegistery: count,
-    });
-  });
-});
-
 
 const port = process.env.PORT || 4000;
 
