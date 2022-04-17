@@ -168,7 +168,7 @@ app.post("/login", function (req, res) {
         // });
   
         // res.cookie("token", token, { maxAge: 1000*60*60 });
-        // res.redirect('/');
+        res.redirect('/');
     }
     else{
         pack.verificationResult = false
