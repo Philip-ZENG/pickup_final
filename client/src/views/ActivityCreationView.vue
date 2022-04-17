@@ -2,9 +2,11 @@
   <table class="showTable" cellspacing="0" cellpadding="0" align="center">
     <tr height="125px" width="100%">
       <td width="50%" align="right"><h1>Post a new event</h1></td>
+
       <td width="50%" align="center">
         <button class="postButton" @click="postActivity">Post</button>
       </td>
+
     </tr>
     <tr height="75px" width="100%">
       <!--type line-->
@@ -12,10 +14,13 @@
       <td width="80%" align="left">
         <button class="singleSelect" @click="getType('Sports')"></button><span>Sports</span>
         <button class="singleSelect" @click="getType('Meals')"></button><span>Meals</span>
+        <!-- eslint-disable-next-line -->
         <button class="singleSelect" @click="getType('Travel')"></button><span>Travel</span>
+
         <button class="singleSelect" @click="getType('Shop online')"></button
         ><span>Shop online</span> <button class="singleSelect" @click="getType('Carpool')"></button
         ><span>Carpool</span>
+
       </td>
     </tr>
     <tr height="75px" width="100%">
@@ -58,18 +63,21 @@
           "
         ></button>
         <span>Other number</span>
+
         <input
           v-model="otherNumber"
           style="width: 25px; height: 25px"
           onkeyup="this.value=this.value.replace(/[^\d]/g,'')"
           :disabled="!otherNumSelected"
         />
+
       </td>
     </tr>
     <tr height="75px" width="100%">
       <!--Description line-->
       <td width="20%" align="left"><h3 style="margin-left: 200px">Activity Description</h3></td>
       <td width="80%" align="left">
+
         <input
           v-model="description"
           placeholder="Type in your activity description here ..."
@@ -159,6 +167,7 @@ export default {
       if (this.type === 'Shop online') return locs[3];
       if (this.type === 'Carpool') return locs[4];
       return [];
+      // eslint-disable-next-line
     },
 
     finalNumber() {
@@ -166,6 +175,7 @@ export default {
       // eslint-disable-next-line
       else {
         if (this.otherNumber === null) return 2;
+        // eslint-disable-next-line
         return this.number;
       }
     },
@@ -177,15 +187,21 @@ export default {
 
     bList1() {
       const bColor = ['white', 'white', 'white', 'white', 'white'];
+
       if (this.type === 'Sports') bColor[0] = 'green';
+      // eslint-disable-next-line
       if (this.type === 'Meals') bColor[1] = 'green';
+      // eslint-disable-next-line
       if (this.type === 'Travel') bColor[2] = 'green';
+      // eslint-disable-next-line
       if (this.type === 'Shop online') bColor[3] = 'green';
+      // eslint-disable-next-line
       if (this.type === 'Carpool') bColor[4] = 'green';
       return bColor;
     },
 
     warningMessage() {
+
       if (this.type === null) return 'You need to give the activity type';
       if (this.title === null) return 'You need to give the activity title';
       if (this.location === null) return 'You need to give the activity location';
