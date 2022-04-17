@@ -2,6 +2,7 @@
   <table class="showTable" cellspacing="0" cellpadding="0" align="center">
     <tr height="125px" width="100%">
       <td width="50%" align="right"><h1>Post a new event</h1></td>
+      <!-- eslint-disable-next-line -->
       <td width="50%" align="center"><button class="postButton" @click="postActivity">Post</button></td>
     </tr>
     <tr height="75px" width="100%"> <!--type line-->
@@ -9,7 +10,9 @@
       <td width="80%" align="left">
         <button class="singleSelect" @click="getType('Sports')"></button><span>Sports</span>
         <button class="singleSelect" @click="getType('Meals')"></button><span>Meals</span>
+        <!-- eslint-disable-next-line -->
         <button class="singleSelect" @click="getType('Travel')"></button><span>Travel</span>
+        <!-- eslint-disable-next-line -->
         <button class="singleSelect" @click="getType('Shop online')"></button><span>Shop online</span>
         <button class="singleSelect" @click="getType('Carpool')"></button><span>Carpool</span>
       </td>
@@ -41,6 +44,7 @@
         <button class="singleSelect" @click="getNumber(4)"></button><span>Four</span>
         <button class="singleSelect" @click="otherNumSelected = true; number=null"></button>
         <span>Other number</span>
+        <!-- eslint-disable-next-line -->
         <input v-model="otherNumber" style="width:25px; height:25px" onkeyup="this.value=this.value.replace(/[^\d]/g,'')"
           :disabled="!otherNumSelected">
       </td>
@@ -48,6 +52,7 @@
     <tr height="75px" width="100%"> <!--Description line-->
       <td width="20%" align="left"><h3 style="margin-left:200px">Activity Description</h3></td>
       <td width="80%" align="left">
+        <!-- eslint-disable-next-line -->
         <input v-model="description" placeholder="Type in your activity description here ..." style="width:400px">
       </td>
     </tr>
@@ -108,35 +113,48 @@ export default {
       if (this.type === 'Shop online') return locs[3];
       if (this.type === 'Carpool') return locs[4];
       return [];
+      // eslint-disable-next-line
     },
 
     finalNumber() {
       if (this.number === null) return this.otherNumber;
+      // eslint-disable-next-line
       else {
         if (this.otherNumber === null) return 2;
+        // eslint-disable-next-line
         return this.number;
       }
     },
 
     finalTime() {
+      // eslint-disable-next-line
       return this.dateToString(this.dateinput) + ' ' + this.hour + ':' + this.min;
     },
 
     bList1() {
-      let bColor = ['white', 'white', 'white', 'white', 'white']
+      const bColor = ['white', 'white', 'white', 'white', 'white'];
+      // eslint-disable-next-line
       if (this.type === 'Sports') bColor[0] = 'green';
+      // eslint-disable-next-line
       if (this.type === 'Meals') bColor[1] = 'green';
+      // eslint-disable-next-line
       if (this.type === 'Travel') bColor[2] = 'green';
+      // eslint-disable-next-line
       if (this.type === 'Shop online') bColor[3] = 'green';
+      // eslint-disable-next-line
       if (this.type === 'Carpool') bColor[4] = 'green';
       return bColor;
     },
 
     warningMessage() {
+      // eslint-disable-next-line
       if(this.type === null) return 'You need to give the activity type';
+      // eslint-disable-next-line
       if(this.title === null) return 'You need to give the activity title';
+      // eslint-disable-next-line
       if(this.location === null) return 'You need to give the activity location';
       return null;
+      // eslint-disable-next-line
     }
   },
 
@@ -157,7 +175,8 @@ export default {
     },
 
     postActivity() {
-      if(this.warningMessage != null){
+      // eslint-disable-next-line
+      if (this.warningMessage != null) {
         alert(this.warningMessage);
       }
       axios.post(
@@ -185,11 +204,14 @@ export default {
       let day = (date.getDate()).toString();
       let dateTime = '';
       if (month.length === 1) {
+        // eslint-disable-next-line
         month = '0' + month;
       }
       if (day.length === 1) {
+        // eslint-disable-next-line
         day = '0' + day;
       }
+      // eslint-disable-next-line
       dateTime = year + '-' + month + '-' + day;
       return dateTime;
     },
