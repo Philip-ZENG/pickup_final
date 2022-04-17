@@ -48,6 +48,7 @@ export default {
     },
     // Login successfully as user
     userLogin() {
+      // set 成 login
       this.$store.dispatch('setIsLogIn');
       this.$store.dispatch('setIsUser', { isUser: true });
       this.$router.push('/userHome');
