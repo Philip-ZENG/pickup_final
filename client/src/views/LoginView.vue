@@ -41,14 +41,13 @@ export default {
     accountVerification() {
       const account = this.userAccount;
       const keyword = this.password;
-
-      axios.post(LOGIN_URL, { userAccount: account, password: keyword }).then((response) => {
-        console.log(response);
+      axios.post(LOGIN_URL, { userAccount: account, password: keyword });
+      axios.get(LOGIN_URL).then((results) => {
+        this.loginStatus = results.data.verificationResult;
       });
     },
     // Login successfully as user
     userLogin() {
-
       this.$store.dispatch('setIsLogIn', { isLogIn: true });
       this.$store.dispatch('setIsUser', { isUser: true });
       this.$router.push('/userHome');
