@@ -26,7 +26,7 @@ var connection = mysql.createConnection({
   host: "database-2.c0pbv8ca91j5.us-east-1.rds.amazonaws.com",
   user: "admin",
   password: "qweasdzxc",
-  database: "user",
+  database: "pickup",
 });
 
 var person = {
@@ -137,28 +137,33 @@ app.post("/login", function (req, res) {
   
   person.email = req.body.userAccount;
   person.password = req.body.password;
-
-  console.log(person);
-
-  var sql = "SELECT password FROM ?? WHERE ?? = ?";
-  var inserts = ['accountInfo', 'email', person.email];
+  
+  var sql = "SELECT * FROM ?? WHERE ?? = ?";
+  var inserts = ['user_info', 'email', person.email];
   sql = mysql.format(sql, inserts);
-
+  
+  
   // 获取user_id 并传回LoginView.vue
-
+  
   connection.query(sql, person, function(err, result){
-
+    
     var password = result[0].password;
+    var get_user_id = result[0].user_id;
+
+    console.log(password);
+    console.log(get_user_id);
+    var pack = {
+      user_id: get_user_id,
+      verificationResult: false,
+    }
+    
     if(password = person.password){
-      res.json({
-        verificationResult: true,
-      });
+        pack.verificationResult = true;
     }
     else{
-      res.json({
-        verificationResult: false,
-      });
+        pack.verificationResult = false
     }
+    res.json(pack);
   });
 });
 
