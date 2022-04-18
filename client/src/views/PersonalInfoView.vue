@@ -3,7 +3,6 @@
     <div class="container-fluid p-4 bg-primary text-white">
       <h1>Personal Information</h1>
     </div>
-
     <div class="row">
         <div class="col-sm-5 p-4">
           <h1>User ID</h1>
@@ -75,7 +74,6 @@
         <button class="btn btn-primary" @click="uploadImage">Upload Your Image</button>
       </div>
     </div>
-
   </div>
 </template>
 
