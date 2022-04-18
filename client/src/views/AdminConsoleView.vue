@@ -1,8 +1,6 @@
 <template>
   <section>
-    <h1>Admin Console</h1>
     <user-list></user-list>
-    <button @click="logout">Logout</button>
   </section>
 </template>
 
@@ -11,7 +9,7 @@ import UserList from '../components/AdminConsole/UserList.vue';
 
 const axios = require('axios').default;
 
-const USER_INFO_URL = 'http://localhost:4000/getUserInfo';
+const ALL_USER_INFO_URL = 'http://localhost:4002/getAllUserInfo';
 
 export default {
   components: {
@@ -28,18 +26,13 @@ export default {
     };
   },
   methods: {
-    logout() {
-      this.$store.dispatch('setIsLogIn', { isLogIn: false });
-      this.$store.dispatch('setIsUser', { isUser: null });
-      this.$router.push('/');
-    },
     /**
      * @description
      * Load all the user data from database, data is stored in
      */
     loadUserData() {
       axios
-        .get(USER_INFO_URL)
+        .get(ALL_USER_INFO_URL)
         .then((response) => {
           console.log(response);
           for (let i = 0; i < response.data.length; i += 1) {

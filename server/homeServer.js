@@ -12,14 +12,14 @@ app.use(bodyParser.json());
 
 // Connecting to the AWS RDS mySQL server
 var connection = mysql.createConnection({
-  // host: "database-2.c0pbv8ca91j5.us-east-1.rds.amazonaws.com",
-  // user: "admin",
-  // password: "qweasdzxc",
-  // database: "pickup",
-  host: '127.0.0.1',
-  user: 'root',
-  password: '123321',
-  database: 'pickup',
+  host: "localhost",
+  user: "root",
+  password: "qweasdzxc",
+  database: "project",
+  // host: '127.0.0.1',
+  // user: 'root',
+  // password: '123321',
+  // database: 'pickup',
 });
 
 // Connet to mysql

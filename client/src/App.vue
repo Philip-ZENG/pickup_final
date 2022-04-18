@@ -1,9 +1,9 @@
 <template>
   <section>
-    <section v-if="(getIsLogIn && getIsUser) || getIsGuest">
+    <section>
       <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd">
         <div class="container-fluid">
-          <a class="navbar-brand" href="http://localhost:8080/#/">PickUp</a>
+          <a class="navbar-brand">PickUp</a>
           <button
             class="navbar-toggler"
             type="button"
@@ -17,7 +17,7 @@
           </button>
 
           <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav" v-if="getIsUser">
               <li class="nav-item">
                 <a class="nav-link" aria-current="page" href="http://localhost:8080/#/userHome">Home</a>
               </li>
@@ -43,11 +43,6 @@
                       >My Activity List</a
                     >
                   </li>
-                  <li>
-                    <a class="dropdown-item" href="http://localhost:8080/#/activityManagement"
-                      >Modify My Activity</a
-                    >
-                  </li>
                 </ul>
               </li>
               <li class="nav-item dropdown">
@@ -70,21 +65,29 @@
                   <li>
                     <a class="dropdown-item" href="http://localhost:8080/#/setting">Setting</a>
                   </li>
-                  <li>
-                    <a class="dropdown-item" href="http://localhost:8080/#/notification"
-                      >Notification</a
-                    >
-                  </li>
                 </ul>
               </li>
-              <li class="nav-item" v-if="getIsLogIn">
-                <button @click="logout">Logout</button>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="http://localhost:8080/#/notification">Store Monitor</a>
               </li>
-              <li class="nav-item" v-if="getIsGuest">
-                <button @click="redirectToLogIn">Login</button>
+            </ul>
+            <ul class="navbar-nav" v-if="getIsAdmin">
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="http://localhost:8080/#/adminConsole">Manage User Account</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" href="http://localhost:8080/#/adminAccountList">Manage Admin Account</a>
               </li>
             </ul>
           </div>
+          <ul style="list-style-type:none;">
+            <li class="nav-item" v-if="getIsUser || getIsAdmin">
+              <button class="btn btn-primary" @click="logout">Logout</button>
+            </li>
+            <li class="nav-item" v-if="getIsGuest">
+              <button class="btn btn-primary" @click="redirectToLogIn">Login</button>
+            </li>
+          </ul>
         </div>
       </nav>
     </section>
@@ -104,12 +107,18 @@ export default {
     getIsGuest() {
       return this.$store.getters.getIsGuest;
     },
+    getIsAdmin() {
+      return this.$store.getters.getIsAdmin;
+    },
   },
   methods: {
     logout() {
       this.$store.dispatch('setIsLogIn', { isLogIn: false });
-      this.$store.dispatch('setIsUser', { isUser: null });
-      this.$router.push('/');
+      this.$store.dispatch('setIsUser', { isUser: false });
+      this.$store.dispatch('setIsAdmin', { isAdmin: false });
+      this.$store.dispatch('setUserId', { userId: null });
+      this.$store.dispatch('setIsGuest', { isGuest: true });
+      this.$router.push('/userHome');
     },
     redirectToLogIn() {
       this.$store.dispatch('setIsGuest', { isGuest: false });

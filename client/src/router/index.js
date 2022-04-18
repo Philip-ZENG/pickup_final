@@ -22,6 +22,18 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/AdminConsoleView.vue'),
   },
   {
+    path: '/adminAccountList',
+    component: () => import(/* webpackChunkName: "about" */ '../views/AdminAccountListView.vue'),
+  },
+  {
+    path: '/adminAccountManagement',
+    component: () => import(/* webpackChunkName: "about" */ '../views/AdminAccountManagementView.vue'),
+  },
+  {
+    path: '/createAdminAccount',
+    component: () => import(/* webpackChunkName: "about" */ '../views/CreateAdminAccount.vue'),
+  },
+  {
     path: '/userManagement',
     name: 'userManagement',
     component: () => import(/* webpackChunkName: "about" */ '../views/UserManagementView.vue'),
@@ -55,12 +67,12 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/SettingView.vue'),
   },
   {
-    path: '/activityList/user_id=:user_id',
+    path: '/activityList',
     name: 'activityList',
     component: () => import(/* webpackChunkName: "about" */ '../views/ActivityListView.vue'),
   },
   {
-    path: '/activityManagement/user_id=:user_id/activity_id=:activity_id',
+    path: '/activityManagement',
     name: 'activityManagement',
     component: () => import(/* webpackChunkName: "about" */ '../views/ActivityManagementView.vue'),
   },
