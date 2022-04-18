@@ -7,12 +7,12 @@
         <div class="card-title text-center"> Password Settings </div>
         <div class="card-body">
             <div id="alert" v-if="alert">{{ alert }}</div>
-
-                <label>
-                    Origin Password
-                    <input type="OriginPassword" v-model="password" />
-                </label>
-
+                <form @submit.prevent="checkOldPassword()">
+                  <label>
+                      Origin Password
+                      <input type="OriginPassword" v-model="password" />
+                  </label>
+                </form>
                 <form @submit.prevent="checkAndResetPassword">
                     <label>
                         Password
@@ -20,7 +20,7 @@
                     </label>
                     <label>
                         Re-type password
-                        <input type="password" v-model="passwordVerify" />
+                        <input type="passwordVerify" v-model="passwordVerify" />
                     </label>
                     <button type="submit">Reset password</button>
                 </form>
@@ -66,15 +66,18 @@
 </div>
 </template>
 
+
 <script>
+  const axios = require('axios').default;
+  const SETTING_URL = "http://localhost:4000/setting"
   // Initialize Userfront
-  Userfront.init("demo1234");
+  // Userfront.init("demo1234");
 
   export default {
     data() {
       return {
-        originPassword: "",
-        password: "",
+        originPassword: null,
+        password: null,
         userName: "",
         Bio: "",
         contact: "",
@@ -86,6 +89,7 @@
       checkAndResetPassword() {
         this.alert = "";
         // Verify that the passwords match
+
         if (this.password !== this.passwordVerify) {
           this.alert = "Passwords must match";
           return;
@@ -99,11 +103,36 @@
       },
     },
 
-        checkOldPassword(){},
-        updatePassword(){},
-        updateUserName(){},
-        updateContact(){},
-        updateBio(){},
+    checkOldPassword(oldPassword){
+      if (this.originPassword !== oldPassword) {
+        this.alert = "The Old Password is Incorrect!"
+        return;
+      }
+    },
+    
+    updatePassword(){
+      const keyword = this.password;
+      axios.post(SETTING_URL, {password: keyword });
+      setTimeout(this.pageUpdate(), 250);
+    },
+
+    updateUserName(){
+      const user_name = this.userName;
+      axios.post(SETTING_URL, { userName: user_name });
+      setTimeout(this.pageUpdate(), 250);
+    },
+
+    updateContact(){
+      const contactInfo = this.contact;
+      axios.post(SETTING_URL, { contact: contactInfo });
+      setTimeout(this.pageUpdate(), 250);
+    },
+
+    updateBio(){
+      const BioInfo = this.Bio;
+      axios.post(SETTING_URL, { Bio: BioInfo });
+      setTimeout(this.pageUpdate(), 250);
+    },
   };
 </script>
 
