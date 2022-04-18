@@ -29,7 +29,6 @@ connection.connect(function (err) {
 
 //fetch available activity from database
 app.post("/getActivityInfo", function (req, res) {
-  console.log("ok");
   var q = "SELECT * FROM activity_info WHERE time > now();";
   connection.query({
     sql:q,
@@ -156,11 +155,17 @@ app.post('/activityMember', function(req, res){
     });
 });
 
+//user can join activity 
 app.post('/joinActivity', function(req, res){
-  var q = "INSERT INTO activity_user VALUES(?,?,'MEMBER')";
+  var q1 = "INSERT INTO activity_user VALUES(?,?,'MEMBER')";
   connection.query({
-    sql: q,
+    sql: q1,
     values: [req.body.activity_id, req.body.user_id]
+  })
+  var q2 = "UPDATE activity_info SET quota_left=quota_left - 1 WHERE activity_id = ?";
+  connection.query({
+    sql: q2,
+    values: [req.body.activity_id]
   })
 })
 
