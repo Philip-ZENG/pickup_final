@@ -50,16 +50,57 @@ app.get('/personalInfo', function(req,res){
   })
 });
 
-app.post('/setting', function(req,res){
+app.post('/setting/password', function(req, res) {
     var password = req.body.password;
+    var user_id = req.body.user_id;
+
+    connection.query({
+        sql: 'UPDATE `user_info` SET `password` = ? WHERE `user_id` = ?',
+        values: [password, user_id]
+        }, function(err, results){
+        console.log('Password Update { user_id: ' + user_id + ', new_password: ' + password + '}');
+        return callback({succeed: true});
+    });
+})
+
+app.post('/setting/name', function(req, res) {
     var userName = req.body.userName;
+    var user_id = req.body.user_id;
+
+    connection.query({
+        sql: 'UPDATE `user_info` SET `user_name` = ? WHERE `user_id` = ?',
+        values: [userName, user_id]
+        }, function(err, results){
+        console.log('Password Update { user_id: ' + user_id + ', new_user_name: ' + userName + '}');
+        return callback({succeed: true});
+    });
+})
+
+app.post('/setting/contact', function(req, res) {
     var contact = req.body.contact;
-    var bio = req.body.Bio;
+    var user_id = req.body.user_id;
 
-    if (password !== null) {
+    connection.query({
+        sql: 'UPDATE `user_info` SET `contact_info` = ? WHERE `user_id` = ?',
+        values: [contact, user_id]
+        }, function(err, results){
+        console.log('Password Update { user_id: ' + user_id + ', new_contact: ' + contact + '}');
+        return callback({succeed: true});
+    });
+})
 
-    }
-});
+app.post('/setting/bio', function(req, res) {
+    var Bio = req.body.Bio;
+    var user_id = req.body.user_id;
+
+    connection.query({
+        sql: 'UPDATE `user_info` SET `personal_intro` = ? WHERE `user_id` = ?',
+        values: [Bio, user_id]
+        }, function(err, results){
+        console.log('Password Update { user_id: ' + user_id + ', new_Bio: ' + Bio + '}');
+        return callback({succeed: true});
+    });
+})
 
 const port = process.env.PORT || 4000;
 

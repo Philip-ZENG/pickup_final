@@ -22,7 +22,7 @@
                         Confirm Your New Password
                         <input type="password" v-model="passwordVerify" placeholder="new password"/>
                     </label>
-                    <button type="submit" class="mx-auto">Reset password</button>
+                    <button type="submit" class="mx-auto" v-on:click="updatePassword">Reset password</button>
                 </form>
         </div>
     </div>
@@ -36,7 +36,7 @@
                     New User name
                     <input type="userName" v-model="userName" placeholder="Your new user name"/>
                 </label>
-                <button type="submit" class="mx-auto">Reset User Name</button>
+                <button type="submit" class="mx-auto" v-on:click="updateUserName">Reset User Name</button>
               </form>
         </div>
     </div>
@@ -50,7 +50,7 @@
                     New Contact
                     <input type="contact" v-model="contact" placeholder="Your new contact Information"/>
                 </label>
-                <button type="submit" class="mx-auto">Reset contact</button>
+                <button type="submit" class="mx-auto" v-on:click="updateContact">Reset contact</button>
             </form>
         </div>
     </div>
@@ -64,7 +64,7 @@
                   New Bio
                   <input type="Bio" v-model="Bio" placeholder="Show Yourself more!"/>
               </label>
-              <button type="submit" class="mx-auto">Update Bio</button>
+              <button type="submit" class="mx-auto" v-on:click="updateBio">Update Bio</button>
             </form>
         </div>
     </div>
@@ -75,6 +75,10 @@
 const axios = require('axios').default;
 
 const SETTING_URL = 'http://localhost:4000/setting';
+const SETTING_PASSWORD_URL = 'http://localhost:4000/setting/password';
+const SETTING_NAME_URL = 'http://localhost:4000/setting/name';
+const SETTING_CONTACT_URL = 'http://localhost:4000/setting/contact';
+const SETTING_BIO_URL = 'http://localhost:4000/setting/bio';
 // Initialize Userfront
 // Userfront.init("demo1234");
 
@@ -90,7 +94,7 @@ export default {
       alert: '',
     };
   },
-  
+
   computed: {
     userId() {
       return Number(this.$store.getters.getUserId);
@@ -115,7 +119,7 @@ export default {
     },
   },
 
-  checkOldPassword(oldPassword) {
+  checkOldPassword() {
     if (this.originPassword !== oldPassword) {
       this.alert = 'The Old Password is Incorrect!';
       // return;
@@ -124,25 +128,29 @@ export default {
 
   updatePassword() {
     const keyword = this.password;
-    axios.post(SETTING_URL, { password: keyword });
+    const id = this.$store.getters.getUserId;
+    axios.post(SETTING_PASSWORD_URL, { password: keyword, user_id:i });
     setTimeout(this.pageUpdate(), 250);
   },
 
   updateUserName() {
     const userNewName = this.userName;
-    axios.post(SETTING_URL, { userName: userNewName });
+    const id = this.$store.getters.getUserId;
+    axios.post(SETTING_NAME_URL, { userName: userNewName, user_id:id  });
     setTimeout(this.pageUpdate(), 250);
   },
 
   updateContact() {
     const contactInfo = this.contact;
-    axios.post(SETTING_URL, { contact: contactInfo });
+    const id = this.$store.getters.getUserId;
+    axios.post(SETTING_CONTACT_URL, { contact: contactInfo, user_id:id });
     setTimeout(this.pageUpdate(), 250);
   },
 
   updateBio() {
     const BioInfo = this.Bio;
-    axios.post(SETTING_URL, { Bio: BioInfo });
+    const id = this.$store.getters.getUserId;
+    axios.post(SETTING_BIO_URL, { Bio: BioInfo, user_id:id });
     setTimeout(this.pageUpdate(), 250);
   },
 };

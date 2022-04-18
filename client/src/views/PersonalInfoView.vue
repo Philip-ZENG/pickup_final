@@ -87,13 +87,13 @@ export default {
     data() {
         return {
             USER_Data: {},
-        }
+        };
     },
 
     provide() {
         return {
             userData: this.USER_Data,
-        }
+        };
     },
 
     methods: {
