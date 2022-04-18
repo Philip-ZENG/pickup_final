@@ -42,6 +42,7 @@ connection.connect(function (err) {
 // Post route (Client post something to the server)
 // This route is called when server receives something from the client
 app.post("/register", function (req, res) {
+  console.log("able to step in");
   // Obtain the client side info with the help of body-parser package
   var person = {
     email: req.body.userAccount,
