@@ -1,15 +1,16 @@
 <template>
   <table class="showTable" cellspacing="0" cellpadding="0" align="center">
-    <tr height="125px" width="100%">
-      <td width="50%" align="right"><h1>Post a new event</h1></td>
+    <tr height="125px" width="100%" class="bg-primary text-white p-4">
+      <td width="50%" align="right"><h1>Post a New Event</h1></td>
       <td width="50%" align="center">
         <button class="postButton" @click="postActivity">Post</button>
       </td>
     </tr>
     <tr height="75px" width="100%">
       <!--type line-->
-      <td width="20%" align="left"><h3 style="margin-left: 200px">Activity Type</h3></td>
-      <td width="80%" align="left">
+      <td width="20%" align="left" class="pt-4">
+        <h3 style="margin-left: 200px">Activity Type</h3></td>
+      <td width="80%" align="left" class="pt-4">
         <button class="singleSelect"
           :class="{ chosen: typeActive('Sports')}"
           @click="getType('Sports')"></button><span>Sports</span>
@@ -29,8 +30,9 @@
     </tr>
     <tr height="75px" width="100%">
       <!--title line-->
-      <td width="20%" align="left"><h3 style="margin-left: 200px">Activity Title</h3></td>
-      <td width="80%" align="left">
+      <td width="20%" align="left" class="pt-2">
+        <h3 style="margin-left: 200px">Activity Title</h3></td>
+      <td width="80%" align="left" class="pt-2">
         <input
           v-model="title"
           placeholder="Type in your activity title here"
@@ -291,29 +293,41 @@ export default {
 };
 </script>
 
-<style>
+<style scope>
 .showTable {
   width: 100%;
-  border-style: solid;
-  border-width: 1px 0px 0px 0px;
-  border-color: black;
+  border-width: 0px;
 }
 
 .postButton {
   height: 40px;
   width: 100px;
-  background-color: white;
   border-radius: 5px;
-}
+  background-color:rgb(149, 193, 247);
+  color:black;
+  border:0;
+  font-size: 15px;
+  box-sizing: content-box;
+  border-radius: 15px;
+
+    }
+  .postButton:hover{
+    background-color: rgb(149, 193, 247);
+  }
 
 .singleSelect {
   height: 20px;
   width: 20px;
   margin: 0px 5px 0px 5px;
-  background-color: white;
+  background-color: #e3f2fd;
+  border:0;
+  /* border-block-color: black; */
+  /* font-size: 18px; */
+  /* box-sizing: content-box; */
+  border-radius: 2px;
 }
 
 .chosen {
-  background-color: rgb(175, 247, 175);
+  background-color: rgb(149, 193, 247);
 }
 </style>

@@ -1,7 +1,9 @@
 <template>
   <section>
-    <br />
-    <h2>Admin Account List</h2>
+    <div class="container-fluid p-4 bg-primary text-white">
+      <h1>Admin Account List</h1>
+    </div>
+    <br>
     <button class="btn btn-primary" @click="createNewAdminAccount">
       Create New Admin Account
     </button>

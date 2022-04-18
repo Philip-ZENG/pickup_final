@@ -6,11 +6,11 @@ const routes = [
     name: 'visitorHome',
     component: () => import(/* webpackChunkName: "about" */ '../views/VisitorHomeView.vue'),
   },
-  {
-    path: '/guestLogin',
-    name: 'guestLogin',
-    component: () => import(/* webpackChunkName: "about" */ '../views/VisitorHomeView.vue'),
-  },
+  // {
+  //   path: '/guestLogin',
+  //   name: 'guestLogin',
+  //   component: () => import(/* webpackChunkName: "about" */ '../views/VisitorHomeView.vue'),
+  // },
   {
     path: '/userHome',
     name: 'userHome',

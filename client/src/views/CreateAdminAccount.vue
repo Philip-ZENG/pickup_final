@@ -1,14 +1,17 @@
 <template>
   <section>
-    <h1>Create Admin Account</h1>
+    <div class="container-fluid p-4 bg-primary text-white">
+      <h1>Create New Admin Account</h1>
+    </div>
+    <br>
     <form @submit.prevent="createAdminAccount">
       <label for="admin_email"
-        >Admin Email<input type="text" id="admin_email" v-model="admin_email"
+        >Admin Email <br> <input type="text" id="admin_email" v-model="admin_email"
       /></label>
       <br />
       <br />
       <label for="admin_password"
-        >Admin Password<input type="password" id="admin_password" v-model="admin_password"
+        >Admin Password <br> <input type="password" id="admin_password" v-model="admin_password"
       /></label>
       <br />
       <br />

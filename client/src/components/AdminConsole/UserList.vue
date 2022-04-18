@@ -1,6 +1,9 @@
 <template>
   <section>
-    <h3>User List</h3>
+    <div class="container-fluid p-4 bg-primary text-white">
+      <h1>User List</h1>
+    </div>
+    <br>
     <user-list-header></user-list-header>
     <user-list-card
       v-for="user in userData"

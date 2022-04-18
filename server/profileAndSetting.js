@@ -16,7 +16,7 @@ var connection = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "qweasdzxc",
-  database: "pickup",
+  database: "project",
 });
 
 // Connecting to the AWS RDS mySQL server
@@ -35,19 +35,18 @@ connection.connect(function (err) {
 
 function getUserInfo(user_id, callback) {
     connection.query({
-        sql: 'SELECT * FROM `user_info` WHERE `user_id` = ?',
-        value: [user_id]
-    }, function(err, results) {
-        console.log(results[0]);
-        return callback(results[0]);
-    })
-}
+      sql: 'SELECT * FROM `user_info` WHERE `user_id` = ?',
+      values: [user_id]
+    }, function (err, results) {
+      console.log(results);
+      return callback(results[0]);
+    });
+  }
 
-// get the information of a specific user with the provided user_id
-app.get('/personalInfo', function(req,res){
-  getUserInfo(req.body.user_id, function(response) {
-      res.json(response);
-  })
+app.post('/getUserInfo', function(req,res) {
+    getUserInfo(req.body.user_id, function(response) {
+        res.json(response);
+    })
 });
 
 app.post('/setting/password', function(req, res) {
@@ -102,7 +101,7 @@ app.post('/setting/bio', function(req, res) {
     });
 })
 
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 4004;
 
 app.listen(port, () => {
   console.log(`listening on ${port}`);

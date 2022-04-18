@@ -1,74 +1,95 @@
 <template>
   <div class="personalInfo">
-    <div class="container-fluid">
+    <div class="container-fluid p-4 bg-primary text-white">
       <h1>Settings</h1>
     </div>
-    <div class="card mx-auto">
-      <div class="card-title text-center">Password Settings</div>
+    <div class="card mx-auto m-4 w-50">
+      <h5 class="card-header text-center p-2">Password Settings</h5>
       <div class="card-body">
         <div id="alert" v-if="alert">{{ alert }}</div>
-        <form @submit.prevent="checkOldPassword()">
+        <form @submit.prevent="checkOldPassword">
           <label for="OriginPassword">
-            Origin Password
-            <input id="OriginPassword" v-model="password" placeholder="original password" />
+            <p>Origin Password</p>
+            <input
+              id="OriginPassword"
+              v-model="password"
+              placeholder="original password"
+              class="mt-2"
+            />
           </label>
         </form>
         <form @submit.prevent="checkAndResetPassword">
           <label for="password1">
-            Password
-            <input id="password1" v-model="password" placeholder="new password" />
+            <p>Password</p>
+            <input id="password1" v-model="password" placeholder="new password" class="mt-2" />
           </label>
-          <br>
+          <br />
           <label for="password2">
-            Confirm Your New Password
-            <input id="password2" v-model="passwordVerify" placeholder="new password" />
+            <p>Confirm new Password</p>
+            <input
+              id="password2"
+              v-model="passwordVerify"
+              placeholder="new password"
+              class="mt-2"
+            />
           </label>
-          <br>
-          <button type="submit" class="mx-auto" v-on:click="updatePassword">Reset password</button>
+          <br />
+          <button type="submit" class="mx-auto m-3" v-on:click="updatePassword">
+            Reset password
+          </button>
         </form>
       </div>
     </div>
 
-    <div class="card mx-auto">
-      <div class="card-title text-center">User Name</div>
+    <div class="card mx-auto m-4 w-50">
+      <h5 class="card-header text-center p-3">User Name</h5>
       <div class="card-body">
         <div id="alert" v-if="alert">{{ alert }}</div>
         <form>
           <label for="userName">
-            New User name
-            <input id="userName" v-model="userName" placeholder="Your new user name" />
+            <p>New User name</p>
+            <input id="userName" v-model="userName" placeholder="Your new user name" class="mt-2" />
           </label>
-          <br>
-          <button type="submit" class="mx-auto" v-on:click="updateUserName">Reset User Name</button>
+          <br />
+          <button type="submit" class="mx-auto m-3" v-on:click="updateUserName">
+            Reset User Name
+          </button>
         </form>
       </div>
     </div>
 
-    <div class="card mx-auto">
-      <div class="card-title text-center">Contact</div>
+    <div class="card mx-auto m-4 w-50">
+      <h5 class="card-header text-center p-3">Contact</h5>
       <div class="card-body">
         <div id="alert" v-if="alert">{{ alert }}</div>
         <form>
           <label for="contact">
-            New Contact
-            <input id="contact" v-model="contact" placeholder="Your new contact Information" />
+            <p>New Contact</p>
+            <input
+              id="contact"
+              v-model="contact"
+              placeholder="Your new contact Information"
+              class="mt-2"
+            />
           </label>
-          <br>
-          <button type="submit" class="mx-auto" v-on:click="updateContact">Reset contact</button>
+          <br />
+          <button type="submit" class="mx-auto m-3" v-on:click="updateContact">
+            Reset contact
+          </button>
         </form>
       </div>
     </div>
-    <div class="card mx-auto">
-      <div class="card-title text-center">Bio</div>
+    <div class="card mx-auto m-4 w-50">
+      <h5 class="card-header text-center p-3">Bio</h5>
       <div class="card-body">
         <div id="alert" v-if="alert">{{ alert }}</div>
         <form>
           <label for="Bio">
-            New Bio
-            <input id="Bio" v-model="Bio" placeholder="Show Yourself more!" />
+            <p>New Bio</p>
+            <input id="Bio" v-model="Bio" placeholder="Show Yourself more!" class="mt-2" />
           </label>
-          <br>
-          <button type="submit" class="mx-auto" v-on:click="updateBio">Update Bio</button>
+          <br />
+          <button type="submit" class="mx-auto m-3" v-on:click="updateBio">Update Bio</button>
         </form>
       </div>
     </div>
@@ -162,23 +183,36 @@ export default {
 input {
   display: block;
   margin-bottom: 10px;
+  border:1px solid #ccc;
+  padding:7px 0px;
+  border-radius:7px;padding-left:5px;
+  -webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075);
+  box-shadow:inset 0 1px 1px rgba(0,0,0,.075);
+  -webkit-transition:border-color ease-in-out .15s,
+  -webkit-box-shadow ease-in-out .15s;
+  -o-transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+  transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s
+  }
+  input:focus{
+  border-color:#66afe9;outline:0;
+  -webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+  box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)
 }
 #alert {
   color: red;
   margin-bottom: 10px;
 }
-button{
-  background-color:#f66f6a;
-  color:white;
+button {
+  background-color: #f66f6a;
+  color: white;
   width: 175px;
   height: 50px;
-  border:0;
+  border: 0;
   font-size: 18px;
   box-sizing: content-box;
   border-radius: 30px;
-  }
-  button:hover{
-    background-color: #f89998;
-  }
-
+}
+button:hover {
+  background-color: #f89998;
+}
 </style>

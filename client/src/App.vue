@@ -67,9 +67,6 @@
                   </li>
                 </ul>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="http://localhost:8080/#/notification">Store Monitor</a>
-              </li>
             </ul>
             <ul class="navbar-nav" v-if="getIsAdmin">
               <li class="nav-item">

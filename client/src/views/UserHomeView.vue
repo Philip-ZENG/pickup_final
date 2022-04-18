@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <table class="showTable" cellspacing="0" cellpadding="0" align="center" >
+    <table class="table-borderless" cellspacing="0" cellpadding="0" align="center">
       <tr height="100px">
         <!--first row-->
         <td id="welcome" align="center" colspan="2" border="1px">
@@ -16,7 +16,7 @@
       </tr>
       <tr height="50px">
         <!--second row-->
-        <td align="center" width="33%">
+        <td align="center" width="33%" class="p-3">
           <!--search bar-->
           <div class="rightSep">
             <select v-model="searchType" style="height: 30px; margin-right:5px">
@@ -24,20 +24,20 @@
               <option value="title">title</option>
             </select>
             <input v-model="userInput" style="height: 30px; margin-right:5px">
-            <button @click="searchActivity" class="tSearch">search</button>
+            <button id="search1" @click="searchActivity" class="tSearch">search</button>
           </div>
         </td>
-        <td align="center" width="33%">
+        <td align="center" width="33%" class="p-3">
           <!--order bar-->
           <div class="rightSep" id="order-select">
             <select v-model="searchOrder" style="height: 30px; margin-right:5px">
               <option disabled value="">Please select one</option>
               <option value="MostRecent">Most Recent</option>
             </select>
-            <button @click="sortActivity" class="tSearch">Sort</button>
+            <button id="sort" @click="sortActivity" class="tSearch">Sort</button>
           </div>
         </td>
-        <td align="center" width="33%">
+        <td align="center" width="33%" class="p-3">
           <!--date bar-->
           <div>
             <datepicker
@@ -48,7 +48,7 @@
                 <div style="height:0px"></div>
               </template>
             </datepicker>
-            <button @click="searchByDate" class="tSearch">search</button>
+            <button id="search2" @click="searchByDate" class="tSearch">search</button>
           </div>
         </td>
       </tr>
@@ -357,7 +357,83 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+table {
+  border:none;
+}
+#createNew {
+  height: 40px;
+  width: 150px;
+  background-color:rgb(149, 193, 247);
+  color:black;
+  border:0;
+  font-size: 15px;
+  box-sizing: content-box;
+  border-radius: 15px;
+
+  }
+#createNew:hover{
+    background-color: rgb(149, 193, 247);
+}
+#search1 {
+  border-radius: 5px;
+  background-color:rgb(149, 193, 247);
+  color:black;
+  border:0;
+  font-size: 15px;
+  box-sizing: content-box;
+  margin-left: 1%;
+  }
+#search1:hover{
+    background-color: rgb(149, 193, 247);
+}
+
+#search2 {
+  border-radius: 5px;
+  background-color:rgb(149, 193, 247);
+  color:black;
+  border:0;
+  font-size: 15px;
+  box-sizing: content-box;
+  margin-left: 3%;
+  }
+#search2:hover{
+    background-color: rgb(149, 193, 247);
+}
+
+#sort {
+  border-radius: 5px;
+  background-color:rgb(149, 193, 247);
+  color:black;
+  border:0;
+  font-size: 15px;
+  box-sizing: content-box;
+  margin-left: 1%;
+  }
+#sort:hover{
+    background-color: rgb(149, 193, 247);
+}
+
+input {
+  /* display: block; */
+  margin-bottom: 10px;
+  border:1px solid #ccc;
+  padding:7px 0px;
+  border-radius:7px;
+  padding-left:5px;
+  -webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075);
+  box-shadow:inset 0 1px 1px rgba(0,0,0,.075);
+  -webkit-transition:border-color ease-in-out .15s,
+  -webkit-box-shadow ease-in-out .15s;
+  -o-transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+  transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s
+  }
+  input:focus{
+  border-color:#66afe9;outline:0;
+  -webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
+  box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)
+}
+
 #welcome {
   border-style: solid;
   border-width: 0px 1px 1px 0px;
@@ -366,14 +442,6 @@ export default {
 #create {
   border-style: solid;
   border-width: 0px 0px 1px 0px;
-}
-
-#createNew {
-  text-align: center;
-  background-color: white;
-  border-radius: 10px;
-  height: 45px;
-  width: 200px;
 }
 
 .rightSep {
@@ -386,7 +454,7 @@ export default {
 .showTable {
   width: 100%;
   border-style: solid;
-  border-width: 1px 0px 1px 0px;
+  border-width: 0px 0px 0px 0px;
   border-color: black;
 }
 
@@ -440,3 +508,4 @@ export default {
  width:30px;
 }
 </style>
+

@@ -1,43 +1,81 @@
 <template>
   <section>
-    <h1>Activity Management Console</h1>
-    <div>
-      <h1>Title</h1>
-      <P>{{ title }}</P>
+    <div class="container-fluid p-4 bg-primary text-white">
+      <h1>Activity Management</h1>
+   </div>
+   <br>
+   <div class="row">
+      <div class="col-sm-5 p-3">
+        <h1>Title</h1>
+      </div>
+      <div class="col-sm-7 p-3">
+        <h2>{{ title }}</h2>
+      </div>
+    </div >
+    <div class="row">
+      <div class="col-sm-5 p-3">
+        <h1>Time</h1>
+      </div>
+      <div class="col-sm-7 p-3">
+        <h2>{{ time }}</h2>
+      </div>
     </div>
-    <div>
-      <h1>Time</h1>
-      <p>{{ time }}</p>
-    </div>
-    <div>
-      <h1>Location</h1>
-      <p>{{ location }}</p>
-    </div>
-    <div>
-      <h1>Type</h1>
-      <p>{{ type }}</p>
-    </div>
-    <div>
-      <h1>Max Capacity</h1>
-      <p>{{ max_capacity }}</p>
-    </div>
-    <div>
-      <h1>Quota Left</h1>
-      <p>{{ quota_left }}</p>
-    </div>
-    <div>
-      <h1>Description</h1>
-      <p>{{ description }}</p>
-    </div>
+    <div class="row">
+      <div class="col-sm-5 p-3">
+        <h1>Location</h1>
+      </div>
+      <div class="col-sm-7 p-3">
+        <h2>{{ location }}</h2>
+      </div>
+    </div >
+    <div class="row">
+      <div class="col-sm-5 p-3">
+        <h1>Type</h1>
+      </div>
+      <div class="col-sm-7 p-3">
+        <h2>{{ type }}</h2>
+      </div>
+    </div >
+    <div class="row">
+      <div class="col-sm-5 p-3">
+        <h1>Max Capacity</h1>
+      </div>
+      <div class="col-sm-7 p-3">
+        <h2>{{ max_capacity }}</h2>
+      </div>
+    </div >
+    <div class="row">
+      <div class="col-sm-5 p-3">
+        <h1>Quota Left</h1>
+      </div>
+      <div class="col-sm-7 p-3">
+        <h2>{{ quota_left }}</h2>
+      </div>
+    </div >
+    <div class="row">
+      <div class="col-sm-5 p-3">
+        <h1>Description</h1>
+      </div>
+      <div class="col-sm-7 p-3">
+        <h2>{{ description }}</h2>
+      </div>
+    </div >
     <member-list></member-list>
-    <h1>Actions</h1>
-    <button class="btn btn-primary" type="button" @click="quitActivity">Quit</button>
-    <button class="btn btn-primary" type="button" @click="toActivityList">Back</button>
-    <div v-if="showTerminate">
-      <button class="btn btn-danger" type="button" @click="terminate">
-        Terminate
-      </button>
-    </div>
+    <div class="row">
+      <div class="col-sm-5 p-3">
+        <h1>Actions</h1>
+      </div>
+      <div class="col-sm-7 p-3">
+        <button class="btn btn-primary m-2 " type="button" @click="quitActivity">Quit</button>
+        <button class="btn btn-primary m-2" type="button" @click="toActivityList">Back</button>
+        <div v-if="showTerminate">
+          <button class="btn btn-danger" type="button" @click="terminate">
+            Terminate
+          </button>
+        </div>
+      </div>
+    </div >
+
   </section>
 </template>
 <script>

@@ -16,7 +16,7 @@ var connection = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "qweasdzxc",
-  database: "pickup",
+  database: "project",
 });
 
 // Connecting to the AWS RDS mySQL server

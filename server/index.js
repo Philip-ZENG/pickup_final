@@ -4,18 +4,16 @@ const bodyParser = require("body-parser");
 const mysql = require("mysql");
 const morgan = require("morgan");
 const nodemailer = require("nodemailer");
-const jwt = require("jsonwebtoken");
-const cookieParser = require("cookie-parser");
-const auth = require("./auth");
+// const jwt = require("jsonwebtoken");
+// const cookieParser = require("cookie-parser");
+// const auth = require("./auth");
 
 const app = express();
 
 app.use(morgan("tiny"));
 app.use(cors());
-app.use(cookieParser);
+// app.use(cookieParser);
 app.use(bodyParser.json());
-
-var loginVerification = false;
 
 // Connecting to the local mySQL server
 var connection = mysql.createConnection({
@@ -50,6 +48,7 @@ var smtpTransport = nodemailer.createTransport({
 
 // Connet to mysql
 connection.connect(function (err) {
+  console.log("Connected to MySQL");
   if (err) throw err;
 });
 
@@ -84,11 +83,6 @@ app.post("/register", function (req, res) {
     }
   });
   console.log(person);
-
-  // var q = "INSERT INTO  SET ?";
-  // connection.query(q, person, function (err, result) {
-  //   if (err) throw err;
-  // });
 });
 
 app.get('/verify', function(req,res){
@@ -98,27 +92,27 @@ app.get('/verify', function(req,res){
       console.log("Domain is matched. Information is from Authentic email");
       if(req.query.id==rand)
       {
-          console.log("email is verified");
+        console.log("email is verified");
 
-          // encryptedPassword = bcrypt.hash(person.password, 10);
-          // person.password = encryptedPassword;
+        // encryptedPassword = bcrypt.hash(person.password, 10);
+        // person.password = encryptedPassword;
 
-          var q = "INSERT INTO accountInfo SET ?";
-          connection.query(q, person, function (err, result) {
-          if (err) throw err;
-          });
-          console.log(person.email);
-          console.log(person.password);
+        var q = "INSERT INTO user_info SET ?";
+        connection.query(q, person, function (err, result) {
+        if (err) throw err;
+        });
+        console.log(person.email);
+        console.log(person.password);
 
-          // const token = jwt.sign(person.email, jwtKey, {
-          //   algorithm: "HS256",
-          //   expiresIn: "2h",
-          // });
-          
-          // res.cookie("token", token, { maxAge: 1000*60*60 });
-          res.redirect('http://localhost:8080/');
-          // console.log(token);
-          // res.end("Email "+mailOptions.to+" is been Successfully verified");
+        // const token = jwt.sign(person.email, jwtKey, {
+        //   algorithm: "HS256",
+        //   expiresIn: "2h",
+        // });
+        
+        // res.cookie("token", token, { maxAge: 1000*60*60 });
+        res.redirect('http://localhost:8080/userHome');
+        // console.log(token);
+        // res.end("Email "+mailOptions.to+" is been Successfully verified");
       }
       else
       {
@@ -132,43 +126,33 @@ app.get('/verify', function(req,res){
     }
 });
 
-
-app.post("/login", function (req, res) {
-  person.email = req.body.userAccount;
-  person.password = req.body.password;
-  
-  var sql = "SELECT * FROM ?? WHERE ?? = ?";
-  var inserts = ['user_info', 'email', person.email];
-  sql = mysql.format(sql, inserts);
-  
-  connection.query(sql, person, function(err, result){
-    
-    var password = result[0].password;
-    var get_user_id = result[0].user_id;
-
-    console.log(password);
-    console.log(get_user_id);
-    var pack = {
-      user_id: get_user_id,
-      verificationResult: false,
-    }
-    
-    if(password = person.password){
-        pack.verificationResult = true;
-
-        // const token = jwt.sign(person.email, jwtKey, {
-        //   algorithm: "HS256",
-        //   expiresIn: "2h",
-        // });
-  
-        // res.cookie("token", token, { maxAge: 1000*60*60 });
-        res.redirect('/');
+function userLogin(email, password, callback) {
+  connection.query({
+    sql: 'SELECT * FROM `user_info` WHERE `email` = ?',
+    values: [email]
+  }, function(err, results) {
+    console.log(results);
+    if(results[0].password === password) {
+      return callback({matched: true});
     }
     else{
-        pack.verificationResult = false
+      return callback({matched: false});
     }
-    res.json(pack);
   });
+}
+
+
+app.post('/userLogin', function(req,res){
+  userLogin(req.body.userAccount, req.body.password, function(response) {
+    if(response.matched) {
+      res.json({userLoginSucceed: true});
+    }
+    else {
+      res.json({userLoginSucceed: false});
+    }
+  })
+});
+
 
 /**
  * @description

@@ -1,76 +1,82 @@
 <template>
-  <section>
-    <div class="personalInfo mt-5">
-      <div class="container-sm p-5 my-5 bg-primary text-white text-center">
-        <h1>Person Profile</h1>
-        <p href="">upload new profile</p>
-        <!-- <img src="" class="rounded-circle" ><sup v-on:click=""> upload new profile </sup>
-        </div> -->
-      </div>
+  <div class="personalInfo">
+    <div class="container-fluid p-4 bg-primary text-white">
+      <h1>Personal Information</h1>
+    </div>
 
-      <div class="row">
-          <div class="col-sm-5 p-4">
-              User ID
-          </div>
-
-          <div class="col-sm-7 p-4">
-              {{ userData[USER_DATA_INDEX].user_id }}
-          </div>
-      </div >
-
-      <div class="row">
-          <div class="col-sm-5 p-4">
-              Username
-          </div>
-
-          <div class="col-sm-7 p-4">
-              {{ userData[USER_DATA_INDEX].user_name }}
-          </div>
-      </div >
-
-      <div class="row">
-          <div class="col-sm-5 p-4">
-              Email
-          </div>
-
-          <div class="col-sm-7 p-4">
-              {{ userData[USER_DATA_INDEX].email }}
-          </div>
-      </div >
-
-      <div class="row">
-          <div class="col-sm-5 p-4">
-              Gender
-          </div>
-
-          <div class="col-sm-7 p-4">
-            {{ userData[USER_DATA_INDEX].gender }}
-          </div>
-      </div >
-
-      <div class="row">
-          <div class="col-sm-5 p-4">
-              Contact Information
-          </div>
-
-          <div class="col-sm-7 p-4">
-              {{ userData[USER_DATA_INDEX].contact_info }}
-          </div>
-      </div >
-
-      <div class="row">
+    <div class="row">
         <div class="col-sm-5 p-4">
-          Bio
+          <h1>User ID</h1>
         </div>
 
         <div class="col-sm-7 p-4">
-          <div class="card">
-            <div class="card-body">{{ userData[USER_DATA_INDEX].personal_intro }}</div>
-          </div>
+          <h2>{{ userData[USER_DATA_INDEX].user_id }}</h2>
         </div>
+    </div >
+
+    <div class="row">
+        <div class="col-sm-5 p-4">
+          <h1>Username</h1>
+        </div>
+
+        <div class="col-sm-7 p-4">
+          <h2>{{ userData[USER_DATA_INDEX].user_name }}</h2>
+        </div>
+    </div >
+
+    <div class="row">
+        <div class="col-sm-5 p-4">
+          <h1>Email</h1>
+        </div>
+
+        <div class="col-sm-7 p-4">
+          <h2>{{ userData[USER_DATA_INDEX].email }}</h2>
+        </div>
+    </div >
+
+    <div class="row">
+        <div class="col-sm-5 p-4">
+          <h1>Gender</h1>
+        </div>
+
+        <div class="col-sm-7 p-4">
+          <h2>{{ userData[USER_DATA_INDEX].gender }}</h2>
+        </div>
+    </div >
+
+    <div class="row">
+        <div class="col-sm-5 p-4">
+          <h1>Contact Information</h1>
+        </div>
+
+        <div class="col-sm-7 p-4">
+           <h2>{{ userData[USER_DATA_INDEX].contact_info }}</h2>
+        </div>
+    </div >
+
+    <div class="row">
+      <div class="col-sm-5 p-4">
+        <h1>Bio</h1>
+      </div>
+
+      <div class="col-sm-7 p-4">
+        <!-- <div class="card w-50"> -->
+          <h2>{{ userData[USER_DATA_INDEX].personal_intro }}</h2>
+        <!-- </div> -->
       </div>
     </div>
-  </section>
+
+    <div class="row">
+      <div class="col-sm-5 p-4">
+        <h1>Image Profile</h1>
+      </div>
+
+      <div class="col-sm-7 p-4">
+        <button class="btn btn-primary" @click="uploadImage">Upload Your Image</button>
+      </div>
+    </div>
+
+  </div>
 </template>
 
 <script>
@@ -78,7 +84,7 @@
 
 const axios = require('axios').default;
 
-const USER_INFO_URL = 'http://localhost:4000/personalInfo';
+const USER_INFO_URL = 'http://localhost:4004/getUserInfo';
 
 export default {
   data() {
@@ -101,7 +107,7 @@ export default {
     getUserInfo() {
       const that = this;
       axios
-        .get(USER_INFO_URL, { user_id: this.user_id })
+        .post(USER_INFO_URL, { user_id: this.user_id })
         .then((response) => {
           that.userData.push(response.data);
           that.USER_DATA_INDEX = 1;
@@ -109,6 +115,9 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    uploadImage() {
+      // Up load your image
     },
   },
 
@@ -121,3 +130,11 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+p {
+  text-align: left;
+  font-size: medium;
+  font-family: Arial;
+}
+</style>

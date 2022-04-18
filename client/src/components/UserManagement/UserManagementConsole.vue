@@ -1,43 +1,79 @@
 <template>
   <section>
-    <h1>User Management Console</h1>
-    <div>
-      <h3>User Id</h3>
-      <P>{{ user_id }}</P>
+    <div class="container-fluid p-4 bg-primary text-white">
+      <h1>User Management</h1>
     </div>
-    <div>
-      <h3>Email</h3>
-      <P>{{ email }}</P>
-    </div>
-    <div>
-      <h3>User Name</h3>
-      <P>{{ user_name }}</P>
-    </div>
-    <div>
-      <h3>Gender</h3>
-      <P>{{ gender }}</P>
-    </div>
-    <div>
-      <h3>Contact Information</h3>
-      <P>{{ contact_info }}</P>
-    </div>
-    <div>
-      <h3>Personal Introduction</h3>
-      <P>{{ Personal_intro }}</P>
-    </div>
+    <br>
+    <div class="row">
+      <div class="col-sm-5 p-4">
+        <h2>User ID</h2>
+      </div>
+      <div class="col-sm-7 p-4">
+        <h2>{{ user_id }}</h2>
+      </div>
+    </div >
+    <div class="row">
+      <div class="col-sm-5 p-4">
+        <h2>Email</h2>
+      </div>
+      <div class="col-sm-7 p-4">
+        <h2>{{ email }}</h2>
+      </div>
+    </div >
+    <div class="row">
+      <div class="col-sm-5 p-4">
+        <h2>User Name</h2>
+      </div>
+      <div class="col-sm-7 p-4">
+        <h2>{{ user_name }}</h2>
+      </div>
+    </div >
+    <div class="row">
+      <div class="col-sm-5 p-4">
+        <h2>Gender</h2>
+      </div>
+      <div class="col-sm-7 p-4">
+        <h2>{{ gender }}</h2>
+      </div>
+    </div >
+    <div class="row">
+      <div class="col-sm-5 p-4">
+        <h2>Contact Info</h2>
+      </div>
+      <div class="col-sm-7 p-4">
+        <h2>{{ contact_info }}</h2>
+      </div>
+    </div >
+    <div class="row">
+      <div class="col-sm-5 p-4">
+        <h2>Personal Introduction</h2>
+      </div>
+      <div class="col-sm-7 p-4">
+        <h2>{{ Personal_intro }}</h2>
+      </div>
+    </div >
     <br />
-    <form @submit.prevent="setNewUserPassword">
-      <label for="user_id"
-        >Set New Password For
-        User<input type="password" v-model="new_user_password" /></label
-      >
-      <button class="btn btn-primary">Set</button>
-    </form>
+    <div class="row">
+      <div class="col-sm-5 p-4">
+        <h2>Set New Password For User</h2>
+      </div>
+      <div class="col-sm-7 p-4">
+      <form @submit.prevent="setNewUserPassword">
+        <label for="user_id"><input type="password" v-model="new_user_password" /></label>
+        <button class="btn btn-primary m-2">Set</button>
+      </form>
+      </div>
+    </div >
+    <div class="row">
+      <div class="col-sm-5 p-4">
+        <h1>Action</h1>
+      </div>
+      <div class="col-sm-7 p-4">
+        <button class="btn btn-danger m-2" @click="deleteUser ">Delete</button>
+        <button class="btn btn-primary m-2" @click="toAdminConsole">Back</button>
+      </div>
+    </div >
     <br>
-    <button class="btn btn-danger" @click="deleteUser">Delete</button>
-    <br>
-    <br>
-    <button class="btn btn-primary" @click="toAdminConsole">Back</button>
   </section>
 </template>
 

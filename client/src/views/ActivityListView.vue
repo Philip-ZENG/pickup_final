@@ -1,7 +1,7 @@
 <template>
 <div>
-  <div class="home mt-3">
-    <h1> My Activity List</h1>
+  <div class="container-fluid p-4 bg-primary text-white">
+    <h1>Activity List</h1>
   </div>
   <div class="container mt-3" style="align: center;">
     <activity-list-title></activity-list-title>

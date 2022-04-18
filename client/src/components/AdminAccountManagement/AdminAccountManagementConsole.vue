@@ -1,6 +1,9 @@
 <template>
   <section>
-    <h1>Admin Account Management Console</h1>
+    <div class="container-fluid p-4 bg-primary text-white">
+      <h1>Admin Account Management</h1>
+    </div>
+    <br>
     <div>
       <h3>Admin Id</h3>
       <P>{{ admin_id }}</P>
@@ -10,10 +13,11 @@
       <P>{{ admin_email }}</P>
     </div>
     <form @submit.prevent="setNewAdminPassword">
-      <label for="user_id"
-        >Set New Password For Admin Account<input type="password" v-model="new_admin_password"
+      <h3>Set New Password For Admin Account</h3>
+      <label for="user_id">
+        <input type="password" v-model="new_admin_password"
       /></label>
-      <button class="btn btn-primary">Set</button>
+      <button class="btn btn-primary m-3">Set</button>
     </form>
     <br />
     <button class="btn btn-danger" @click="deleteAdmin">Delete</button>

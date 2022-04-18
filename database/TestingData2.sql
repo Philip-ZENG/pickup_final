@@ -14,9 +14,9 @@ VALUES
 INSERT INTO activity_info
 (title, time, max_capacity, type)
 VALUES
-('Shopping', NOW(), 10, 'Shopping'),
-('Running', NOW(), 10, 'Running'),
-('Eating', NOW(), 10, 'Eating');
+('Shopping', '2022-05-29 12:00:00', 10, 'Shopping'),
+('Running', '2022-05-29 12:00:00', 10, 'Running'),
+('Eating', '2022-05-29 12:00:00', 10, 'Eating');
 
 
 INSERT INTO user_info
