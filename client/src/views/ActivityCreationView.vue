@@ -10,12 +10,21 @@
       <!--type line-->
       <td width="20%" align="left"><h3 style="margin-left: 200px">Activity Type</h3></td>
       <td width="80%" align="left">
-        <button class="singleSelect" @click="getType('Sports')"></button><span>Sports</span>
-        <button class="singleSelect" @click="getType('Meals')"></button><span>Meals</span>
-        <button class="singleSelect" @click="getType('Travel')"></button><span>Travel</span>
-        <button class="singleSelect" @click="getType('Shop online')"></button><span
-        >Shop online</span>
-        <button class="singleSelect" @click="getType('Carpool')"></button><span>Carpool</span>
+        <button class="singleSelect"
+          :class="{ chosen: typeActive('Sports')}"
+          @click="getType('Sports')"></button><span>Sports</span>
+        <button class="singleSelect"
+          :class="{ chosen: typeActive('Meals')}"
+          @click="getType('Meals')"></button><span>Meals</span>
+        <button class="singleSelect"
+          :class="{ chosen: typeActive('Travel')}"
+          @click="getType('Travel')"></button><span>Travel</span>
+        <button class="singleSelect"
+          :class="{ chosen: typeActive('Shop online')}"
+          @click="getType('Shop online')"></button><span>Shop online</span>
+        <button class="singleSelect"
+          :class="{ chosen: typeActive('Carpool')}"
+          @click="getType('Carpool')"></button><span>Carpool</span>
       </td>
     </tr>
     <tr height="75px" width="100%">
@@ -33,12 +42,17 @@
       <!--time line-->
       <td width="20%" align="left"><h3 style="margin-left: 200px">Activity Time</h3></td>
       <td width="80%" align="left">
-        <datepicker v-model="dateinput"></datepicker>
-        <select v-model="hour">
+        <datepicker v-model="dateinput">
+          <template v-slot:belowDate>
+            <div style="height:0px"></div>
+          </template>
+        </datepicker>
+        <span> - </span>
+        <select v-model="hour" style="height:50px">
           <option v-for="(h, index) in hours" :key="index">{{ h }}</option>
         </select>
         <span> : </span>
-        <select v-model="min">
+        <select v-model="min" style="height:50px">
           <option v-for="(m, index) in mins" :key="index">{{ m }}</option>
         </select>
       </td>
@@ -47,15 +61,21 @@
       <!--number line-->
       <td width="30%" align="left"><h3 style="margin-left: 200px">No. of Members</h3></td>
       <td width="70%" align="left">
-        <button class="singleSelect" @click="getNumber(2)"></button><span>Two</span>
-        <button class="singleSelect" @click="getNumber(3)"></button><span>Three</span>
-        <button class="singleSelect" @click="getNumber(4)"></button><span>Four</span>
+        <button class="singleSelect"
+          :class="{ chosen: numberActive(2)}"
+          @click="getNumber(2)"></button><span>Two</span>
+        <button class="singleSelect"
+          :class="{ chosen: numberActive(3)}"
+          @click="getNumber(3)"></button><span>Three</span>
+        <button class="singleSelect"
+          :class="{ chosen: numberActive(4)}"
+          @click="getNumber(4)"></button><span>Four</span>
         <button
           class="singleSelect"
+          :class="{ chosen: numberActive('other')}"
           @click="
             otherNumSelected = true;
-            number = null;
-          "
+            number = null;"
         ></button>
         <span>Other number</span>
         <input
@@ -91,6 +111,7 @@
 </template>
 
 <script>
+/* eslint-disable */
 import Datepicker from 'vuejs3-datepicker';
 
 const axios = require('axios').default;
@@ -147,11 +168,11 @@ export default {
   computed: {
     locations() {
       const locs = [
-        ['Muse Basketball Court', 'Diligentia Basketball Court', 'University Sports Hall'],
-        ['Diligentia Canteen', 'Muse Canteen', 'Pandora Canteen'],
+        ['Muse Basketball Court', 'Diligentia Basketball Court', 'University Sports Hall', 'Da Yun Sports'],
+        ['Diligentia Canteen', 'Muse Canteen', 'Pandora Canteen', 'Second Floor of SAC', 'Harmonia Canteen', 'Shaw Canteen'],
         ['In Shenzhen', 'Out of Shenzhen'],
         ['Diligentia College', 'Muse College', 'Harmonia College', 'Shaw College'],
-        ['Longgang District', 'Nanshan District', 'Baoan District'],
+        ['Longgang District', 'other District'],
       ];
       if (this.type === 'Sports') return locs[0];
       if (this.type === 'Meals') return locs[1];
@@ -165,7 +186,6 @@ export default {
       if (this.number === null) return this.otherNumber;
       // eslint-disable-next-line
       else {
-        if (this.otherNumber === null) return 2;
         return this.number;
       }
     },
@@ -189,10 +209,6 @@ export default {
   },
 
   methods: {
-    printOut() {
-      console.log(this.finalTime);
-    },
-
     getType(t) {
       this.typeSelected = true;
       this.type = t;
@@ -209,24 +225,31 @@ export default {
         alert('Please first login');
         this.switchTo('/login');
       }
-      if (this.warningMessage != null) {
-        alert(this.warningMessage);
+      else{
+        if (this.warningMessage != null) {
+          alert(this.warningMessage);
+        }
+        else{
+          axios
+          .post('http://localhost:4001/postActivity', {
+            title: this.title,
+            time: this.finalTime,
+            location: this.location,
+            description: this.description,
+            number: this.finalNumber,
+            type: this.type,
+            user_id: this.userId,
+          })
+          .then((response) => {
+            console.log(response);
+            alert("successfully post the activity");
+            this.switchTo('/userHome');
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        }
       }
-      axios
-        .post('http://localhost:4000/postActivity', {
-          title: this.title,
-          time: this.finalTime,
-          location: this.location,
-          description: this.description,
-          number: this.finalNumber,
-          type: this.type,
-        })
-        .then((response) => {
-          console.log(response);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
     },
 
     dateToString(date) {
@@ -248,8 +271,22 @@ export default {
     },
 
     switchTo(path) {
-      this.$router.replace(path);
+      this.$router.push(path);
     },
+
+    typeActive (t) {
+      if (t === this.type) return true;
+      return false;
+    },
+
+    numberActive (n) {
+      if (n === 'other') {
+        if(this.otherNumSelected) return true;
+        return false;
+      }
+      if( n === this.finalNumber) return true;
+      return false;
+    }
   },
 };
 </script>
@@ -273,5 +310,10 @@ export default {
   height: 20px;
   width: 20px;
   margin: 0px 5px 0px 5px;
+  background-color: white;
+}
+
+.chosen {
+  background-color: rgb(175, 247, 175);
 }
 </style>

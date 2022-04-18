@@ -1,12 +1,20 @@
 <template>
+ <!-- eslint-disable -->
   <div class="actCard">
-    <div class = "firstRow">
-      <div class="profileOuter"><img class="profile" alt=" " src="../../../public/male.png"/></div>
-      <div class="titlePlace"> {{title}}</div>
-      <div class="datePlace"> {{time}}</div>
+    <div class="firstCol">
+      <div class="out">
+        <img src="../../../public/Sports.png" v-show="type === 'Sports'" class="in">
+        <img src="../../../public/Meals.png" v-show="type === 'Meals'" class="in">
+        <img src="../../../public/Travel.png" v-show="type === 'Travel'" class="in">
+        <img src="../../../public/Carpool.png" v-show="type === 'Carpool'" class="in">
+        <img src="../../../public/Shoponline.png" v-show="type === 'Shop online'" class="in">
+      </div>
     </div>
-    <div class="secondRow">
-      {{description}}
+    <div class="secondCol">
+      <div class="row">title: {{title}}</div>
+      <div class="row">type: {{type}}</div>
+      <div class="row">time: {{time}}</div>
+      <div class="row">location: {{location}} </div>
     </div>
   </div>
 </template>
@@ -15,9 +23,10 @@
 export default {
   name: 'ActivityCard',
   props: {
+    type: { type: String },
     title: { type: String },
     time: { type: String },
-    description: { type: String },
+    location: { type: String },
   },
   data() {
     return {
@@ -35,37 +44,33 @@ export default {
   box-shadow: 2px 1px 3px#000;
 }
 
-.firstRow{
-  height: 40px; width: 275px;
+.firstCol{
+  float:left;
+  width: 10%;
+  height: 100%;
 }
 
-.secondRow{
-  height: 50px; width: 275px;
+.out{
+  width:20px;
+  height: 20px;
+}
+
+.in{
+  max-width:20px;
+  max-height: 20px;
+}
+
+.secondCol{
+  float:left;
+  width:90%;
+  height: 100%;
+}
+
+.row {
+  margin-left: 10px;
+  height: 25%;
+  width: 100%;
+  text-align: center;
   overflow: hidden;
-}
-
-.profileOuter{
-  float: left;
-  border-radius: 50%;
-  width: 40px; height: 40px;
-}
-
-.profile{
-  width: 38px; height: 38px;
-  border-radius: 50%;
-}
-
-.titlePlace{
-  float: left;
-  height: 20px;
-  align-content: center;
-  margin-top: 10px; margin-bottom: 10px;
-}
-
-.datePlace{
-  float: left;
-  height: 20px;
-  align-content: center;
-  margin-top: 10px; margin-bottom: 10px;
 }
 </style>

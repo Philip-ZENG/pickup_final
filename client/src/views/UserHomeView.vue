@@ -1,10 +1,13 @@
 <template>
   <div class="home">
-    <table class="showTable" cellspacing="0" cellpadding="0" align="center">
+    <table class="showTable" cellspacing="0" cellpadding="0" align="center" >
       <tr height="100px">
         <!--first row-->
-        <td id="swip" align="center" colspan="2" border="1px">
-          <span>{{userId}}</span>
+        <td id="welcome" align="center" colspan="2" border="1px">
+          <div>
+            Welcome to PickUp, hope you can find friends here.
+          </div>
+          <div>Now is: {{ nowDate }}</div>
         </td>
         <td id="create" align="center">
           <button id = "createNew" @click="tryPost">
@@ -13,34 +16,39 @@
       </tr>
       <tr height="50px">
         <!--second row-->
-        <td align="center" width="50%">
+        <td align="center" width="33%">
           <!--search bar-->
           <div class="rightSep">
-            <select v-model="searchType">
+            <select v-model="searchType" style="height: 30px; margin-right:5px">
               <option value="type">type</option>
               <option value="title">title</option>
             </select>
-            <input v-model="userInput" />
-            <button @click="searchActivity">search</button>
+            <input v-model="userInput" style="height: 30px; margin-right:5px">
+            <button @click="searchActivity" class="tSearch">search</button>
           </div>
         </td>
-        <td align="center" width="20%">
+        <td align="center" width="33%">
           <!--order bar-->
           <div class="rightSep" id="order-select">
-            <select v-model="searchOrder">
+            <select v-model="searchOrder" style="height: 30px; margin-right:5px">
               <option disabled value="">Please select one</option>
               <option value="MostRecent">Most Recent</option>
-              <option value="MostPopular">Most Popular</option>
             </select>
-            <button @click="sortActivity">Sort</button>
+            <button @click="sortActivity" class="tSearch">Sort</button>
           </div>
         </td>
-        <td align="center" width="20%">
+        <td align="center" width="33%">
           <!--date bar-->
           <div>
-            <datepicker v-model="dateinput" placeholder="Select Date" iconColor="purple">
+            <datepicker
+              v-model="dateinput"
+              :disabled-dates="{ to: new Date() }"
+              iconColor="green">
+              <template v-slot:belowDate>
+                <div style="height:0px"></div>
+              </template>
             </datepicker>
-            <button @click="searchByDate">search</button>
+            <button @click="searchByDate" class="tSearch">search</button>
           </div>
         </td>
       </tr>
@@ -48,10 +56,14 @@
 
     <div class="actSquare">
       <!-- activity square-->
+      <span v-show="shownActivity.length === 0"> no activity available</span>
       <dl>
         <dt v-for="(act, index) in shownActivity" :key="index">
-          <activity-card :time="dateToString(new Date(act.time))" :title="act.title"
-            :description="act.description" @click="showDetail(index)">
+          <activity-card :title="act.title"
+            :type="act.type"
+            :location="act.location"
+            :time="dateToString(new Date(act.time))"
+            @click="showDetail(index)">
           </activity-card>
         </dt>
       </dl>
@@ -66,33 +78,34 @@
         </select>
       </div>
     </div>
-
     <!-- detail card-->
     <!--eslint-disable-next-line -->
     <div class="cardOut" v-show="cardSelected" @click="cardSelected = false"></div>
       <div class="detailCard" v-show="cardSelected">
-        <table width="90%" height="90%" padding="5%" cellspacing="0" cellpadding="0" align="center">
+        <table width="90%" height="90%" margin="5%" cellspacing="0" cellpadding="0" align="center">
           <tr width="100%" height="50px"> <!-- first row-->
-            <td width="25%">{{shownMemberList[0][0]}}</td>
+            <td width="25%">organizer: {{managerName}}</td>
             <td width="30%">type: {{Object(shownActivity[chosenIndex]).type}}</td>
             <td width="45%">title: {{Object(shownActivity[chosenIndex]).title}}</td>
           </tr>
            <tr width="100%" height="50px"> <!-- second row-->
-            <td>number:
-              <!-- eslint-disable-next-line -->
-              {{Object(shownActivity[chosenIndex]).max_capacity - Object(shownActivity[chosenIndex]).quota_left}} /
+            <!--eslint-disable-next-line -->
+            <td>member:{{Object(shownActivity[chosenIndex]).max_capacity - Object(shownActivity[chosenIndex]).quota_left}} /
               {{Object(shownActivity[chosenIndex]).max_capacity}}</td>
             <td>Loc: {{Object(shownActivity[chosenIndex]).location}}</td>
-            <td>Time: {{dateToString(new Date(Object(shownActivity[chosenIndex]).time))}}</td>
+            <td>Time: {{new Date(Object(shownActivity[chosenIndex]).time)}}</td>
           </tr>
           <tr width="100%" height="50px"> <!-- second row-->
             <td colspan="3" align="center">
-              <div v-for="(member,index) in shownMemberList[1]" :key="index"
-                style="width:20px; height:20px; float:left">
-                {{member}}
-              </div>
               <!--eslint-disable-next-line -->
-              <div style="border:solid; border-radius:50%; height:20px; width:20px; float:left" @click="tryJoin">+</div>
+              <button
+                class="join"
+                @click="tryJoin"
+                v-show="!(Object(shownActivity[chosenIndex]).quota_left === 0)">+
+              </button>
+              <span v-show="(Object(shownActivity[chosenIndex]).quota_left === 0)">
+                This activity is full!!! Look for other activities.
+              </span>
             </td>
           </tr>
           <tr>
@@ -130,7 +143,8 @@ export default {
       cardSelected: false,
       chosenIndex: 0,
       memberIdList: null,
-      memberProfileList: null,
+      managerName: null,
+      nowDate: "", // 当前日期
     };
   },
 
@@ -169,7 +183,7 @@ export default {
     shownMemberList() {
       if (this.memberIdList === null) return [[0],[0]];
       return this.memberIdList;
-    }
+    },
   },
 
   watch: {
@@ -181,7 +195,7 @@ export default {
 
   methods: {
     switchTo(path) {
-      this.$router.replace(path);
+      this.$router.push(path);
     },
 
     tryPost() {
@@ -195,7 +209,7 @@ export default {
     //search for activity given certain type or title
     searchActivity() {
       axios
-        .post('http://localhost:4000/searchActivity', {
+        .post('http://localhost:4001/searchActivity', {
           searchType: this.searchType,
           userInput: this.userInput,
         })
@@ -210,7 +224,9 @@ export default {
     //get activity infromation from database
     askInfo() {
       axios
-        .post('http://localhost:4000/getActivityInfo', { today: this.dateToString(new Date()) })
+        .post(
+          'http://localhost:4001/getActivityInfo', 
+          { today: this.dateToString(new Date())})
         .then((response) => {
           this.actInformation = response.data;
         })
@@ -222,7 +238,7 @@ export default {
     //search for the activity on a certain day
     searchByDate() {
       axios
-        .post('http://localhost:4000/searchByDate', {
+        .post('http://localhost:4001/searchByDate', {
           dateinput: this.dateToString(this.dateinput),
         })
         .then((response) => {
@@ -255,11 +271,11 @@ export default {
       const act = Object(this.shownActivity[this.chosenIndex]);
 
       axios.post(
-        'http://localhost:4000/activityMember',
+        'http://localhost:4001/activityMember',
         { activity_id: act.activity_id}
       ).then((response) => {
         this.memberIdList = response.data.idList;
-        this.memberProfileList = response.data.profileList;
+        this.managerName = response.data.name;
       }).catch((error) => {
         console.log(err);
       });
@@ -268,7 +284,7 @@ export default {
     //sort the activity
     sortActivity() {
       axios
-        .post('http://localhost:4000/MostRecent')
+        .post('http://localhost:4001/MostRecent')
         .then((response) => {
           this.actInformation = response.data;
         })
@@ -284,14 +300,17 @@ export default {
         this.switchTo('/login');
       }else{
         if (this.memberIdCheck()){
-          alert('You have already participated in the activity!')
+          alert('You have already participated in the activity!');
+          this.cardSelected = false;
           return;
         }
         else{
           axios.post(
-            'http://localhost:4000/joinActivity',
+            'http://localhost:4001/joinActivity',
             { activity_id:this.shownActivity[this.chosenIndex].activity_id, user_id: this.userId}
           );
+          alert('You successfully join the activity!');
+          this.cardSelected = false;
         }
       }
     },
@@ -304,19 +323,42 @@ export default {
       return false;
     },
 
-    printOut(a) {
-      console.log(a);
+    currentTime() {
+      setInterval(this.formatDate, 500);
     },
+
+    formatDate() {
+      let date = new Date();
+      let year = date.getFullYear(); // Year
+      let month = date.getMonth() + 1; // Month
+      let day = date.getDate(); // Day
+      let week = date.getDay(); // Week
+      let weekArr = [ "Sunday", "Monday", "Tuesday", "Wedesday", "Thursday", "Friday", "Saturday" ];
+      let hour = date.getHours(); // hour
+      hour = hour < 10 ? "0" + hour : hour;
+      let minute = date.getMinutes(); // min
+      minute = minute < 10 ? "0" + minute : minute;
+      let second = date.getSeconds(); // sec
+      second = second < 10 ? "0" + second : second; 
+      this.nowDate = `${year}/${month}/${day} ${hour}:${minute}:${second} ${weekArr[week]}`;
+    }
   },
 
   mounted() {
     this.askInfo();
+    this.currentTime();
   },
+
+  beforeDestroy() {
+    if (this.formatDate) {
+      clearInterval(this.formatDate); 
+    }
+  }
 };
 </script>
 
 <style>
-#swip {
+#welcome {
   border-style: solid;
   border-width: 0px 1px 1px 0px;
 }
@@ -384,5 +426,17 @@ export default {
   background-color: whitesmoke;
   border: solid;
   border-radius: 10px;
+}
+
+.tSearch {
+  border-radius: 5px;
+  background-color: white;
+}
+
+.join {
+ border:solid;
+ border-radius:50%;
+ height:30px;
+ width:30px;
 }
 </style>
