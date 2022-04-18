@@ -69,7 +69,6 @@
       </div>
     </div>
 
-
     <!-- detail card-->
     <!--eslint-disable-next-line -->
     <div class="cardOut" v-show="cardSelected" @click="cardSelected = false"></div>

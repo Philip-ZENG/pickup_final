@@ -201,7 +201,6 @@ export default {
     },
 
     warningMessage() {
-
       if (this.type === null) return 'You need to give the activity type';
       if (this.title === null) return 'You need to give the activity title';
       if (this.location === null) return 'You need to give the activity location';

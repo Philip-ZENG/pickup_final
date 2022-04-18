@@ -16,7 +16,7 @@ import ActivityListTitle from '../components/ActivityList/ActivityListTitle.vue'
 
 const axios = require('axios').default;
 
-const ACTIVITY_INFO_URL = 'http://localhost:4000/getActivityList';
+const ACTIVITY_INFO_URL = 'http://localhost:4003/getActivityList';
 
 export default {
   components: {
@@ -62,7 +62,7 @@ export default {
   },
   created() {
     // get the route parameter 'id' from router
-    this.user_id.push(this.$route.params.user_id);
+    this.user_id.push(this.$store.getters.getUserId);
   },
 };
 </script>

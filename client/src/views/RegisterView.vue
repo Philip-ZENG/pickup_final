@@ -1,19 +1,16 @@
 <template>
   <section>
-    <div class="about">
-      <h1>This is the register page</h1>
-    </div>
-
+    <br>
     <div class="userInput">
       <p>Email Address</p>
       <input v-model="userAccount" placeholder="Email" />
       <p>Password</p>
       <input v-model="password" placeholder="Password" />
       <p></p>
-      <button v-on:click="postMessage">Register</button>
+      <button v-on:click="postMessage">Sign Up</button>
     </div>
     <br>
-    <button @click="goToLogin">GoToLogin</button>
+    <p>Already have an account? <router-link to="/login">Log In</router-link></p>
   </section>
 </template>
 
@@ -39,10 +36,6 @@ export default {
       const keyword = this.password;
       axios.post(REGISTER_URL, { userAccount: account, password: keyword });
       setTimeout(this.pageUpdate(), 500);
-    },
-
-    goToLogin() {
-      this.$router.push('/login');
     },
   },
 };

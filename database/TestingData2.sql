@@ -25,10 +25,10 @@ VALUES
 ('philip@google.com', '123456', 'philip'),
 ('alex@google.com', '123456', 'alex'),
 ('bob@google.com', '123456', 'bob'),
-('marry@google.com','123456', 'marry');
-
+('marry@google.com','123456', 'marry'),
+('max@gmail.com', '123456', 'max');
 
 INSERT INTO admin_account
 (admin_email, admin_password)
 VALUES
-('admin@gmail.com', '123456');
+('admin1@gmail.com', '123456');
