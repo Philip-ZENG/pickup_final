@@ -10,19 +10,19 @@
                 <form @submit.prevent="checkOldPassword()">
                   <label>
                       Origin Password
-                      <input type="OriginPassword" v-model="password" />
+                      <input type="OriginPassword" v-model="password" placeholder="original password"/>
                   </label>
                 </form>
                 <form @submit.prevent="checkAndResetPassword">
                     <label>
                         Password
-                        <input type="password" v-model="password" />
+                        <input type="password" v-model="password" placeholder="new password"/>
                     </label>
                     <label>
-                        Re-type password
-                        <input type="passwordVerify" v-model="passwordVerify" />
+                        Confirm Your New Password
+                        <input type="password" v-model="passwordVerify" placeholder="new password"/>
                     </label>
-                    <button type="submit">Reset password</button>
+                    <button type="submit" class="mx-auto" v-on:click="updatePassword">Reset password</button>
                 </form>
         </div>
     </div>
@@ -31,11 +31,13 @@
         <div class="card-title text-center"> User Name</div>
         <div class="card-body">
             <div id="alert" v-if="alert">{{ alert }}</div>
+              <form>
                 <label>
                     New User name
-                    <input type="userName" v-model="passwordVerify" />
+                    <input type="userName" v-model="userName" placeholder="Your new user name"/>
                 </label>
-                <button type="submit">Reset User Name</button>
+                <button type="submit" class="mx-auto" v-on:click="updateUserName">Reset User Name</button>
+              </form>
         </div>
     </div>
 
@@ -43,11 +45,13 @@
         <div class="card-title text-center">Contact</div>
         <div class="card-body">
             <div id="alert" v-if="alert">{{ alert }}</div>
+            <form>
                 <label>
                     New Contact
-                    <input type="contact" v-model="passwordVerify" />
+                    <input type="contact" v-model="contact" placeholder="Your new contact Information"/>
                 </label>
-                <button type="submit">Reset contact</button>
+                <button type="submit" class="mx-auto" v-on:click="updateContact">Reset contact</button>
+            </form>
         </div>
     </div>
 
@@ -55,85 +59,101 @@
         <div class="card-title text-center">Bio</div>
         <div class="card-body">
             <div id="alert" v-if="alert">{{ alert }}</div>
-                <label>
-                    New Bio
-                    <input type="Bio" v-model="passwordVerify" />
-                </label>
-                <button type="submit">Update Bio</button>
+            <form>
+              <label>
+                  New Bio
+                  <input type="Bio" v-model="Bio" placeholder="Show Yourself more!"/>
+              </label>
+              <button type="submit" class="mx-auto" v-on:click="updateBio">Update Bio</button>
+            </form>
         </div>
     </div>
-        
 </div>
 </template>
 
-
 <script>
-  const axios = require('axios').default;
-  const SETTING_URL = "http://localhost:4000/setting"
-  // Initialize Userfront
-  // Userfront.init("demo1234");
+const axios = require('axios').default;
 
-  export default {
-    data() {
-      return {
-        originPassword: null,
-        password: null,
-        userName: "",
-        Bio: "",
-        contact: "",
-        passwordVerify: "",
-        alert: "",
-      };
+const SETTING_URL = 'http://localhost:4000/setting';
+const SETTING_PASSWORD_URL = 'http://localhost:4000/setting/password';
+const SETTING_NAME_URL = 'http://localhost:4000/setting/name';
+const SETTING_CONTACT_URL = 'http://localhost:4000/setting/contact';
+const SETTING_BIO_URL = 'http://localhost:4000/setting/bio';
+// Initialize Userfront
+// Userfront.init("demo1234");
+
+export default {
+  data() {
+    return {
+      originPassword: null,
+      password: null,
+      userName: '',
+      Bio: '',
+      contact: '',
+      passwordVerify: '',
+      alert: '',
+    };
+  },
+
+  computed: {
+    userId() {
+      return Number(this.$store.getters.getUserId);
     },
-    methods: {
-      checkAndResetPassword() {
-        this.alert = "";
-        // Verify that the passwords match
+  },
 
-        if (this.password !== this.passwordVerify) {
-          this.alert = "Passwords must match";
-          return;
-        }
-        // Call Userfront.resetPassword()
-        Userfront.resetPassword({
-          password: this.password,
-        }).catch((error) => {
-          this.alert = error.message;
-        });
-      },
-    },
+  methods: {
+    checkAndResetPassword() {
+      this.alert = '';
+      // Verify that the passwords match
 
-    checkOldPassword(oldPassword){
-      if (this.originPassword !== oldPassword) {
-        this.alert = "The Old Password is Incorrect!"
-        return;
+      if (this.password !== this.passwordVerify) {
+        this.alert = 'Passwords must match';
+        // return;
       }
+      // Call Userfront.resetPassword()
+      // Userfront.resetPassword({
+      //   password: this.password,
+      // }).catch((error) => {
+      //   this.alert = error.message;
+      // });
     },
-    
-    updatePassword(){
-      const keyword = this.password;
-      axios.post(SETTING_URL, {password: keyword });
-      setTimeout(this.pageUpdate(), 250);
-    },
+  },
 
-    updateUserName(){
-      const user_name = this.userName;
-      axios.post(SETTING_URL, { userName: user_name });
-      setTimeout(this.pageUpdate(), 250);
-    },
+  checkOldPassword() {
+    if (this.originPassword !== oldPassword) {
+      this.alert = 'The Old Password is Incorrect!';
+      // return;
+    }
+  },
 
-    updateContact(){
-      const contactInfo = this.contact;
-      axios.post(SETTING_URL, { contact: contactInfo });
-      setTimeout(this.pageUpdate(), 250);
-    },
+  updatePassword() {
+    const keyword = this.password;
+    const id = this.$store.getters.getUserId;
+    axios.post(SETTING_PASSWORD_URL, { password: keyword, user_id:i });
+    setTimeout(this.pageUpdate(), 250);
+  },
 
-    updateBio(){
-      const BioInfo = this.Bio;
-      axios.post(SETTING_URL, { Bio: BioInfo });
-      setTimeout(this.pageUpdate(), 250);
-    },
-  };
+  updateUserName() {
+    const userNewName = this.userName;
+    const id = this.$store.getters.getUserId;
+    axios.post(SETTING_NAME_URL, { userName: userNewName, user_id:id  });
+    setTimeout(this.pageUpdate(), 250);
+  },
+
+  updateContact() {
+    const contactInfo = this.contact;
+    const id = this.$store.getters.getUserId;
+    axios.post(SETTING_CONTACT_URL, { contact: contactInfo, user_id:id });
+    setTimeout(this.pageUpdate(), 250);
+  },
+
+  updateBio() {
+    const BioInfo = this.Bio;
+    const id = this.$store.getters.getUserId;
+    axios.post(SETTING_BIO_URL, { Bio: BioInfo, user_id:id });
+    setTimeout(this.pageUpdate(), 250);
+  },
+};
 </script>
 
 <style scoped>
@@ -148,4 +168,3 @@
     margin-bottom: 10px;
   }
 </style>
-
