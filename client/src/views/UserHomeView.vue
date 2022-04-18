@@ -78,7 +78,9 @@
             <td width="45%">title: {{Object(shownActivity[chosenIndex]).title}}</td>
           </tr>
            <tr width="100%" height="50px"> <!-- second row-->
-            <td>number:{{Object(shownActivity[chosenIndex]).max_capacity - Object(shownActivity[chosenIndex]).quota_left}} /
+            <td>number:
+              <!-- eslint-disable-next-line -->
+              {{Object(shownActivity[chosenIndex]).max_capacity - Object(shownActivity[chosenIndex]).quota_left}} /
               {{Object(shownActivity[chosenIndex]).max_capacity}}</td>
             <td>Loc: {{Object(shownActivity[chosenIndex]).location}}</td>
             <td>Time: {{dateToString(new Date(Object(shownActivity[chosenIndex]).time))}}</td>

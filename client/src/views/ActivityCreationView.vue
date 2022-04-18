@@ -13,7 +13,8 @@
         <button class="singleSelect" @click="getType('Sports')"></button><span>Sports</span>
         <button class="singleSelect" @click="getType('Meals')"></button><span>Meals</span>
         <button class="singleSelect" @click="getType('Travel')"></button><span>Travel</span>
-        <button class="singleSelect" @click="getType('Shop online')"></button><span>Shop online</span>
+        <button class="singleSelect" @click="getType('Shop online')"></button><span
+        >Shop online</span>
         <button class="singleSelect" @click="getType('Carpool')"></button><span>Carpool</span>
       </td>
     </tr>
@@ -162,6 +163,7 @@ export default {
 
     finalNumber() {
       if (this.number === null) return this.otherNumber;
+      // eslint-disable-next-line
       else {
         if (this.otherNumber === null) return 2;
         return this.number;
@@ -169,14 +171,15 @@ export default {
     },
 
     finalTime() {
+      // eslint-disable-next-line
       return this.dateToString(this.dateinput) + ' ' + this.hour + ':' + this.min;
     },
 
     warningMessage() {
-      if(this.type === null) return 'You need to give the activity type';
-      if(this.title === null) return 'You need to give the activity title';
-      if(this.location === null) return 'You need to give the activity location';
-      if(this.description === null) return 'You need to give the activity description';
+      if (this.type === null) return 'You need to give the activity type';
+      if (this.title === null) return 'You need to give the activity title';
+      if (this.location === null) return 'You need to give the activity location';
+      if (this.description === null) return 'You need to give the activity description';
       return null;
     },
 
@@ -202,7 +205,7 @@ export default {
     },
 
     postActivity() {
-      if(this.userId === null || this.userId === 0){
+      if (this.userId === null || this.userId === 0) {
         alert('Please first login');
         this.switchTo('/login');
       }
@@ -232,11 +235,14 @@ export default {
       let day = date.getDate().toString();
       let dateTime = '';
       if (month.length === 1) {
+        // eslint-disable-next-line
         month = '0' + month;
       }
       if (day.length === 1) {
+        // eslint-disable-next-line
         day = '0' + day;
       }
+      // eslint-disable-next-line
       dateTime = year + '-' + month + '-' + day;
       return dateTime;
     },

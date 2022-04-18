@@ -1,19 +1,22 @@
 <template>
   <section>
-    <br>
-    <div class="userInput">
-      <p>Email Address</p>
-      <input v-model="userAccount" placeholder="Email" />
-      <p>Password</p>
-      <input v-model="password" placeholder="Password" />
-      <p></p>
-      <button v-on:click="userLogin">User Login</button>
-      <br><br>
-      <button @click="adminLogin">Admin Login</button>
+    <div class="container">
+      <div class="box">
+        <div class="userInput">
+          <header><strong>Log In</strong></header>
+          <p>Email Address</p>
+          <input v-model="userAccount" placeholder="Email" />
+          <p>Password</p>
+          <input v-model="password" placeholder="Password" />
+          <br><br>
+          <button v-on:click="userLogin" class="btn btn-primary">User Login</button>
+          <button @click="adminLogin" class="btn btn-secondary">Admin Login</button>
+        </div>
+        <br>
+        <p>Don’t have an account? <router-link to="/register">Sign Up</router-link></p>
+        <br>
+      </div>
     </div>
-    <br>
-    <p>Don’t have an account? <router-link to="/register">Sign Up</router-link></p>
-    <br>
     <button @click="userTest">User Test</button>
     <br>
     <br>
@@ -73,14 +76,14 @@ export default {
     userTest() {
       this.$store.dispatch('setUserId', { user_id: 1 });
       this.$store.dispatch('setIsLogIn', { isLogIn: true });
-      this.$store.dispatch('setIsGuest', { isUser: false });
+      this.$store.dispatch('setIsGuest', { isGuest: false });
       this.$store.dispatch('setIsUser', { isUser: true });
       this.$router.push('/userHome');
     },
     adminTest() {
       this.$store.dispatch('setAdminId', { admin_id: 1 });
       this.$store.dispatch('setIsLogIn', { isLogIn: true });
-      this.$store.dispatch('setIsGuest', { isUser: false });
+      this.$store.dispatch('setIsGuest', { isGuest: false });
       this.$store.dispatch('setIsAdmin', { isAdmin: true });
       this.$router.push('/adminConsole');
     },
@@ -91,3 +94,30 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+header {
+  top: 25px;
+  position: relative;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  margin: 3rem auto;
+  border-radius: 10px;
+  padding: 1rem;
+  background-color: #58004d;
+  color: white;
+  text-align: center;
+  width: 80%;
+  max-width: 40rem;
+}
+.box {
+  height: 40%;
+  width: 33%;
+  margin: auto;
+  position: relative;
+  background-color: #FFF6EA;
+  border-radius: 10px;
+}
+.container {
+  position: relative;
+}
+</style>
