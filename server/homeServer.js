@@ -69,16 +69,33 @@ app.post("/postActivity", function(req, res){
   "VALUES (?,?,?,?,?,?,?);";
   connection.query({
     sql: q,
-    values: [req.body.title, req.body.time, req.body.location, req.body.description, req.body.number, req.body.number - 1, req.body.type],
+    values: [req.body.title, req.body.time, req.body.location, req.body.description,
+       req.body.number, req.body.number - 1, req.body.type],
   }, function(err, result){
     if (err) throw err;
-    res.json(result);
+    q = "SELECT activity_id FROM activity_info WHERE" + 
+      "`title` = ? AND `time` = ? AND `location` = ? AND `type` = ?";
+    connection.query({
+      sql: q,
+      values: [req.body.title, req.body.time, req.body.location, req.body.type]
+    }, function(err, result){
+      if (err) throw err;
+      var activity_id = result[0].activity_id;
+      q = "INSERT INTO activity_user VALUES(?,?,'MANAGER')"
+      connection.query({
+        sql:q,
+        values: [activity_id, req.body.user_id]
+      }, function (err, result) {
+        if (err) throw err;
+        res.json({succeed: true});
+      })
+    });
   });
 });
 
 //sort the activity
 app.post('/MostRecent', function(req,res){
-  var q = "SELECT * FROM activity_info WHERE time > now() ORDER BY `time` DESC";
+  var q = "SELECT * FROM activity_info WHERE time > now() ORDER BY `time`";
   connection.query(q, function(err, result){
     if (err) throw err;
     res.json(result);
@@ -103,12 +120,13 @@ function getMemberList(activity_id, callback){
 }
 
 //get the profile information for a certain user
-function getUserProfile(user_id, callback){
-  var q = 'SELECT `profile_photo` from user_info WHERE user_id = ?';
+function getManagerName(user_id, callback){
+  var q = 'SELECT `user_name` from user_info WHERE user_id = ?';
   connection.query({
     sql:q,
     values: [user_id]
   }, function(err, result){
+    if (err) throw err;
     return callback(result[0]);
   })
 }
@@ -124,23 +142,15 @@ async function pack_profile_info(activity_id){
 
   var myPromise2 = function(user_id){
     return new Promise(function(resolve){
-      getUserProfile(user_id, (data) =>{
+      getManagerName(user_id, (data) =>{
         resolve(data);
       });
     });
   }
 
-  var result = [[], []];
-
   const memberList = await myPromise1(activity_id);
-  const managerProfile = await myPromise2(memberList[0][0]);
-  result[0].push(managerProfile.profile_photo);
-  for(var i = 0; i < memberList[1].length; i++){
-    const memberProfile = await myPromise2(memberList[1][i]);
-    result[1].push(memberProfile.profile_photo);
-  }
-
-  var pack = { idList: memberList, profileList: result};
+  const managerName = (await myPromise2(memberList[0][0])).user_name;
+  var pack = { idList: memberList, name: managerName};
   return pack;
 }
 
@@ -169,7 +179,7 @@ app.post('/joinActivity', function(req, res){
   })
 })
 
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 4001;
 
 app.listen(port, () => {
   console.log(`listening on ${port}`);
