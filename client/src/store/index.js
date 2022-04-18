@@ -13,6 +13,7 @@ const store = createStore({
       isLogIn: false,
       // true means identity is user, false means identity is admin
       isUser: null,
+      isGuest: false,
     };
   },
   // getter is equivalent to computed property
@@ -29,6 +30,9 @@ const store = createStore({
     getIsUser(state) {
       return state.isUser;
     },
+    getIsGuest(state) {
+      return state.isGuest;
+    },
   },
   // mutation is equivalent to method
   mutations: {
@@ -38,14 +42,14 @@ const store = createStore({
     setUserToken(state, data) {
       state.user_token = data.user_token;
     },
-    setIsLogIn(state) {
-      state.isLogIn = true;
+    setIsLogIn(state, data) {
+      state.isLogIn = data.isLogIn;
     },
     setIsUser(state, data) {
       state.isUser = data.isUser;
     },
-    setIsLogOut(state) {
-      state.isLogIn = false;
+    setIsGuest(state, data) {
+      state.isGuest = data.isGuest;
     },
   },
   /**
@@ -59,14 +63,14 @@ const store = createStore({
     setUserToken(context, data) {
       context.commit('setUserToken', data);
     },
-    setIsLogIn(context) {
-      context.commit('setIsLogIn');
+    setIsLogIn(context, data) {
+      context.commit('setIsLogIn', data);
     },
     setIsUser(context, data) {
       context.commit('setIsUser', data);
     },
-    setIsLogOut(context) {
-      context.commit('setIsLogOut');
+    setIsGuest(context, data) {
+      context.commit('setIsGuest', data);
     },
   },
 });
