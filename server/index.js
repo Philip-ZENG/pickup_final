@@ -18,19 +18,34 @@ app.use(bodyParser.json());
 var loginVerification = false;
 
 // Connecting to the local mySQL server
-// var connection = mysql.createConnection({
-//   host: "localhost",
-//   user: "root",
-//   password: "qweasdzxc",
-//   database: "join_us",
-// });
+var connection = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "qweasdzxc",
+  database: "project",
+});
 
 // Connecting to the AWS RDS mySQL server
-var connection = mysql.createConnection({
-  host: "database-2.c0pbv8ca91j5.us-east-1.rds.amazonaws.com",
-  user: "admin",
-  password: "qweasdzxc",
-  database: "user",
+// var connection = mysql.createConnection({
+//   host: "database-2.c0pbv8ca91j5.us-east-1.rds.amazonaws.com",
+//   user: "admin",
+//   password: "qweasdzxc",
+//   database: "pickup",
+// });
+
+var person = {
+  email:null,
+  password:null
+}
+
+var rand,mailOptions,host,link;
+
+var smtpTransport = nodemailer.createTransport({
+  service: "QQ",
+  auth: {
+      user: "2316293336@qq.com",
+      pass: "tpqedtppgfcfebie"
+  }
 });
 
 // Connet to mysql
@@ -51,7 +66,7 @@ app.post("/register", function (req, res) {
 
   console.log(person);
 
-  // var q = "INSERT INTO accountInfo SET ?";
+  // var q = "INSERT INTO  SET ?";
   // connection.query(q, person, function (err, result) {
   //   if (err) throw err;
   // });
@@ -69,7 +84,7 @@ app.get('/verify', function(req,res){
           // encryptedPassword = bcrypt.hash(person.password, 10);
           // person.password = encryptedPassword;
 
-          var q = "INSERT INTO accountInfo SET ?";
+          var q = "INSERT INTO user_info SET ?";
           connection.query(q, person, function (err, result) {
           if (err) throw err;
           });
@@ -127,24 +142,44 @@ app.post("/login", function (req, res) {
     else{
       loginVerification = false;
     }
+    res.json(pack);
   });
 });
 
-app.get("/login", function (req, res) {
-  if(loginVerification){
-    res.json({
-      verificationResult: true,
-    });
-  }
-  else{
-    res.json({
-      verificationResult: false,
-    });
-  }
+/**
+ * @description
+ * Get the password data stored in database with provided admin_email
+ */
+function adminLogin(admin_email, admin_password, callback) {
+  connection.query({
+    sql: 'SELECT * FROM `admin_account` WHERE admin_email = ?',
+    values: [admin_email]
+  }, function(err, results) {
+    console.log(results);
+    if(results[0].admin_password === admin_password) {
+      return callback({matched: true});
+    }
+    else{
+      return callback({matched: false});
+    }
+  });
+}
+
+/**
+ * @description
+ * For the given email, Check whether the provided password matches that in the database
+ */
+app.post('/adminLogin', function(req,res){
+  adminLogin(req.body.admin_email, req.body.admin_password, function(response) {
+    if(response.matched) {
+      res.json({adminLoginSucceed: true});
+    }
+    else {
+      res.json({adminLoginSucceed: false});
+    }
+  })
 });
 
-// when "/" page is requested, the callback function is called, called routing, usually we send out a page (html) file
-// Client gets something from the server
 
 const port = process.env.PORT || 4000;
 

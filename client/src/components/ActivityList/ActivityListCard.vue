@@ -43,8 +43,8 @@ export default {
      */
     toActivityManagement() {
       // eslint-disable-next-line
-      const targetPath = '/activityManagement/user_id=' + this.userId + '/activity_id=' + this.activity_id;
-      this.$router.push(targetPath);
+      this.$store.dispatch('activityManagement/setActivityId', { activity_id: this.activity_id });
+      this.$router.push('/activityManagement');
     },
   },
 };

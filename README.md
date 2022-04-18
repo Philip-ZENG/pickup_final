@@ -104,10 +104,7 @@ Attributes are list below; Constrains are listed after the attribute
     - gender: `VARCHAR(20)`, value can only be one of the two `[MALE,FEMALE]`
     - contact_info: `VARCHAR(20)`
     - personal_intro: `VARCHAR(255)`
-    - My portrait: Select from given range (NOT IMPLEMENTED)
-    - **identity: `INT`**
-      - **0 for normal user**
-      - **1 for administration user**
+    - profile_photo: `VARCHAR(255)`
   - Table Name: activity_info
     - activity_id: `INT`, `AUTO INCREMENT`, `PRIMARY KEY`, `NOT NULL`
     - title: `VARCHAR(255)`, `NOT NULL`
@@ -117,7 +114,10 @@ Attributes are list below; Constrains are listed after the attribute
     - max_capacity: `INT`, `NOT NULL`
     - quota_left: `INT`
     - type:`VARCHAR(255)`, `NOT NULL`, value can only be one of the five `[Sports,Meals,Travel,GroupShopping,Carpool]`
-    - heat: `INT`
+  - Table Name: admin_account
+    - admin_id: `INT`, `AUTO_INCREMENT`, `PRIMARY KEY`, `NOT NULL`
+    - admin_email: `VARCHAR(255)`, `UNIQUE`, `NOT NULL`
+    - admin_password: `VARCHAR(255)`, `NOT NULL`
 
 - Table to implement
 

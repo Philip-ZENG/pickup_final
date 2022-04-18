@@ -19,12 +19,12 @@ import ActivityManagementConsole from '../components/ActivityManagement/Activity
 
 const axios = require('axios').default;
 
-const ACTIVITY_INFO_URL = 'http://localhost:4000/getActivityInfo';
-const USER_ROLE = 'http://localhost:4000/getUserRole';
-const DELETE_MEMBER = 'http://localhost:4000/quitActivity';
-const CHANGE_MANAGER = 'http://localhost:4000/changeManager';
-const TERMINATE_ACTIVITY = 'http://localhost:4000/terminateActivity';
-const MEMBER_INFO = 'http://localhost:4000/getMemberInfo';
+const ACTIVITY_INFO_URL = 'http://localhost:4003/getActivityInfo';
+const USER_ROLE = 'http://localhost:4003/getUserRole';
+const DELETE_MEMBER = 'http://localhost:4003/quitActivity';
+const CHANGE_MANAGER = 'http://localhost:4003/changeManager';
+const TERMINATE_ACTIVITY = 'http://localhost:4003/terminateActivity';
+const MEMBER_INFO = 'http://localhost:4003/getMemberInfo';
 
 export default {
   components: {
@@ -124,8 +124,8 @@ export default {
   },
   created() {
     // get the route parameter 'id' from router
-    this.activity_id = this.$route.params.activity_id;
-    this.user_id.push(this.$route.params.user_id);
+    this.activity_id = this.$store.getters['activityManagement/getActivityId'];
+    this.user_id.push(this.$store.getters.getUserId);
   },
 };
 </script>

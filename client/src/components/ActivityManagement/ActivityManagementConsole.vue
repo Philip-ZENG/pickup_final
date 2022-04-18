@@ -105,8 +105,7 @@ export default {
      */
     toActivityList() {
       // eslint-disable-next-line
-      const targetPath = '/activityList/user_id=' + this.userId;
-      this.$router.push(targetPath);
+      this.$router.push('/activityList');
     },
     /**
      * @description
