@@ -23,6 +23,7 @@
             Confirm Your New Password
             <input id="password2" v-model="passwordVerify" placeholder="new password" />
           </label>
+          <br>
           <button type="submit" class="mx-auto" v-on:click="updatePassword">Reset password</button>
         </form>
       </div>
@@ -37,6 +38,7 @@
             New User name
             <input id="userName" v-model="userName" placeholder="Your new user name" />
           </label>
+          <br>
           <button type="submit" class="mx-auto" v-on:click="updateUserName">Reset User Name</button>
         </form>
       </div>
@@ -51,6 +53,7 @@
             New Contact
             <input id="contact" v-model="contact" placeholder="Your new contact Information" />
           </label>
+          <br>
           <button type="submit" class="mx-auto" v-on:click="updateContact">Reset contact</button>
         </form>
       </div>
@@ -64,6 +67,7 @@
             New Bio
             <input id="Bio" v-model="Bio" placeholder="Show Yourself more!" />
           </label>
+          <br>
           <button type="submit" class="mx-auto" v-on:click="updateBio">Update Bio</button>
         </form>
       </div>
@@ -155,14 +159,26 @@ export default {
 </script>
 
 <style scoped>
-button,
 input {
   display: block;
   margin-bottom: 10px;
 }
-
 #alert {
   color: red;
   margin-bottom: 10px;
 }
+button{
+  background-color:#f66f6a;
+  color:white;
+  width: 175px;
+  height: 50px;
+  border:0;
+  font-size: 18px;
+  box-sizing: content-box;
+  border-radius: 30px;
+  }
+  button:hover{
+    background-color: #f89998;
+  }
+
 </style>

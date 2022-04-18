@@ -53,17 +53,36 @@ connection.connect(function (err) {
   if (err) throw err;
 });
 
-
 // Post route (Client post something to the server)
 // This route is called when server receives something from the client
 app.post("/register", function (req, res) {
   console.log("able to step in");
   // Obtain the client side info with the help of body-parser package
-  var person = {
-    email: req.body.userAccount,
-    password: req.body.password
-  };
+  person.email = req.body.userAccount;
+  person.password = req.body.password;
 
+  // Insert the data into database, the syntax comes from the mysql.js package
+  rand=Math.floor((Math.random() * 100) + 54);
+  host=req.get('host');
+  console.log(host);
+  link="http://"+req.get('host')+"/verify?id="+rand;
+  mailOptions={
+      from: "2316293336@qq.com",
+      to : person.email,
+      subject : "Please confirm your Email account",
+      html : "Hello,Please Click on the link to verify your email."+link+">Click here to verify" 
+  }
+
+  console.log(mailOptions);
+  smtpTransport.sendMail(mailOptions, function(error, response){
+    if(error){
+          console.log(error);
+      res.end("error");
+    }else{
+          console.log("Message sent: " + response.message);
+      res.end("sent");
+    }
+  });
   console.log(person);
 
   // var q = "INSERT INTO  SET ?";
@@ -84,7 +103,7 @@ app.get('/verify', function(req,res){
           // encryptedPassword = bcrypt.hash(person.password, 10);
           // person.password = encryptedPassword;
 
-          var q = "INSERT INTO user_info SET ?";
+          var q = "INSERT INTO accountInfo SET ?";
           connection.query(q, person, function (err, result) {
           if (err) throw err;
           });
@@ -115,19 +134,25 @@ app.get('/verify', function(req,res){
 
 
 app.post("/login", function (req, res) {
-  var person = {
-    email: req.body.userAccount,
-    password: req.body.password
-  };
-
-  console.log(person);
-
-  var sql = "SELECT password FROM ?? WHERE ?? = ?";
-  var inserts = ['accountInfo', 'email', person.email];
+  person.email = req.body.userAccount;
+  person.password = req.body.password;
+  
+  var sql = "SELECT * FROM ?? WHERE ?? = ?";
+  var inserts = ['user_info', 'email', person.email];
   sql = mysql.format(sql, inserts);
+  
   connection.query(sql, person, function(err, result){
-
+    
     var password = result[0].password;
+    var get_user_id = result[0].user_id;
+
+    console.log(password);
+    console.log(get_user_id);
+    var pack = {
+      user_id: get_user_id,
+      verificationResult: false,
+    }
+    
     if(password = person.password){
         pack.verificationResult = true;
 
@@ -140,11 +165,10 @@ app.post("/login", function (req, res) {
         res.redirect('/');
     }
     else{
-      loginVerification = false;
+        pack.verificationResult = false
     }
     res.json(pack);
   });
-});
 
 /**
  * @description
