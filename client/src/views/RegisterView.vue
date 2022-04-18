@@ -21,7 +21,6 @@ const REGISTER_URL = 'http://localhost:4000/register';
 
 export default {
   name: 'RegisterView',
-
   data() {
     return {
       email: null,

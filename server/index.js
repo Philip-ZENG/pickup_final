@@ -6,12 +6,16 @@ const morgan = require("morgan");
 const nodemailer = require("nodemailer");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
+const auth = require("./auth");
 
 const app = express();
 
 app.use(morgan("tiny"));
 app.use(cors());
+app.use(cookieParser);
 app.use(bodyParser.json());
+
+var loginVerification = false;
 
 // Connecting to the local mySQL server
 var connection = mysql.createConnection({
@@ -53,33 +57,13 @@ connection.connect(function (err) {
 // Post route (Client post something to the server)
 // This route is called when server receives something from the client
 app.post("/register", function (req, res) {
+  console.log("able to step in");
   // Obtain the client side info with the help of body-parser package
-  
-  person.email = req.body.userAccount;
-  person.password = req.body.password;
+  var person = {
+    email: req.body.userAccount,
+    password: req.body.password
+  };
 
-  // Insert the data into database, the syntax comes from the mysql.js package
-  rand=Math.floor((Math.random() * 100) + 54);
-  host=req.get('host');
-  console.log(host);
-  link="http://"+req.get('host')+"/verify?id="+rand;
-  mailOptions={
-      from: "2316293336@qq.com",
-      to : person.email,
-      subject : "Please confirm your Email account",
-      html : "Hello,Please Click on the link to verify your email."+link+">Click here to verify" 
-  }
-
-  console.log(mailOptions);
-  smtpTransport.sendMail(mailOptions, function(error, response){
-    if(error){
-          console.log(error);
-      res.end("error");
-    }else{
-          console.log("Message sent: " + response.message);
-      res.end("sent");
-    }
-  });
   console.log(person);
 
   // var q = "INSERT INTO  SET ?";
@@ -113,11 +97,8 @@ app.get('/verify', function(req,res){
           // });
           
           // res.cookie("token", token, { maxAge: 1000*60*60 });
-          console.log("redirect");
           res.redirect('http://localhost:8080/');
           // console.log(token);
-          
-          console.log("EmailOption");
           // res.end("Email "+mailOptions.to+" is been Successfully verified");
       }
       else
@@ -134,37 +115,34 @@ app.get('/verify', function(req,res){
 
 
 app.post("/login", function (req, res) {
-  
-  person.email = req.body.userAccount;
-  person.password = req.body.password;
-  
-  var sql = "SELECT * FROM ?? WHERE ?? = ?";
-  var inserts = ['user_info', 'email', person.email];
-  sql = mysql.format(sql, inserts);
-  
-  
-  // 获取user_id 并传回LoginView.vue
-  
-  connection.query(sql, person, function(err, result){
-    
-    var password = result[0].password;
-    var get_user_id = result[0].user_id;
+  var person = {
+    email: req.body.userAccount,
+    password: req.body.password
+  };
 
-    console.log(password);
-    console.log(get_user_id);
-    var pack = {
-      user_id: get_user_id,
-      verificationResult: false,
-    }
-    
+  console.log(person);
+
+  var sql = "SELECT password FROM ?? WHERE ?? = ?";
+  var inserts = ['accountInfo', 'email', person.email];
+  sql = mysql.format(sql, inserts);
+  connection.query(sql, person, function(err, result){
+
+    var password = result[0].password;
     if(password = person.password){
         pack.verificationResult = true;
+
+        // const token = jwt.sign(person.email, jwtKey, {
+        //   algorithm: "HS256",
+        //   expiresIn: "2h",
+        // });
+  
+        // res.cookie("token", token, { maxAge: 1000*60*60 });
+        res.redirect('/');
     }
     else{
-        pack.verificationResult = false
+      loginVerification = false;
     }
     res.json(pack);
-    
   });
 });
 
@@ -201,6 +179,7 @@ app.post('/adminLogin', function(req,res){
     }
   })
 });
+
 
 const port = process.env.PORT || 4000;
 
