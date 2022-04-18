@@ -33,13 +33,32 @@ connection.connect(function (err) {
   console.log('mySQL server connection succeed.')
 });
 
+function getUserInfo(user_id, callback) {
+    connection.query({
+        sql: 'SELECT * FROM `user_info` WHERE `user_id` = ?',
+        value: [user_id]
+    }, function(err, results) {
+        console.log(results[0]);
+        return callback(results[0]);
+    })
+}
 
+// get the information of a specific user with the provided user_id
 app.get('/personalInfo', function(req,res){
-    
+  getUserInfo(req.body.user_id, function(response) {
+      res.json(response);
+  })
 });
 
 app.post('/setting', function(req,res){
+    var password = req.body.password;
+    var userName = req.body.userName;
+    var contact = req.body.contact;
+    var bio = req.body.Bio;
 
+    if (password !== null) {
+
+    }
 });
 
 const port = process.env.PORT || 4000;
