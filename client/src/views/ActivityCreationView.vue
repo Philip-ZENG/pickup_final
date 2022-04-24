@@ -1,6 +1,6 @@
 <template>
   <table class="showTable" cellspacing="0" cellpadding="0" align="center">
-    <tr height="125px" width="100%" class="bg-primary text-white p-4">
+    <tr height="125px" width="100%" class="heading p-4">
       <td width="50%" align="right"><h1>Post a New Event</h1></td>
       <td width="50%" align="center">
         <button class="postButton" @click="postActivity">Post</button>
@@ -44,7 +44,8 @@
       <!--time line-->
       <td width="20%" align="left"><h3 style="margin-left: 200px">Activity Time</h3></td>
       <td width="80%" align="left">
-        <datepicker v-model="dateinput">
+        <datepicker v-model="dateinput"
+          :disabled-dates="{to:new Date()}">
           <template v-slot:belowDate>
             <div style="height:0px"></div>
           </template>
@@ -185,9 +186,11 @@ export default {
     },
 
     finalNumber() {
-      if (this.number === null) return this.otherNumber;
-      // eslint-disable-next-line
-      else {
+      if (this.otherNumSelected){
+        if(this.otherNumber === null) return null;
+        return this.otherNumber
+      }else{
+        if(this.number === null) return null;
         return this.number;
       }
     },
@@ -200,6 +203,7 @@ export default {
     warningMessage() {
       if (this.type === null) return 'You need to give the activity type';
       if (this.title === null) return 'You need to give the activity title';
+      if(this.finalNumber === null) return 'You need to give the number of members';
       if (this.location === null) return 'You need to give the activity location';
       if (this.description === null) return 'You need to give the activity description';
       return null;
@@ -293,7 +297,7 @@ export default {
 };
 </script>
 
-<style scope>
+<style scoped>
 .showTable {
   width: 100%;
   border-width: 0px;
@@ -303,7 +307,7 @@ export default {
   height: 40px;
   width: 100px;
   border-radius: 5px;
-  background-color:rgb(149, 193, 247);
+  background-color: #f66f6a;
   color:black;
   border:0;
   font-size: 15px;
@@ -312,7 +316,7 @@ export default {
 
     }
   .postButton:hover{
-    background-color: rgb(149, 193, 247);
+    background-color: #f89998;
   }
 
 .singleSelect {
@@ -329,5 +333,9 @@ export default {
 
 .chosen {
   background-color: rgb(149, 193, 247);
+}
+
+.heading {
+  background-color: #FFF8D5;
 }
 </style>

@@ -4,26 +4,29 @@
       <div class="box">
         <div class="userInput">
           <header><strong>Log In</strong></header>
-          <p class="m-2">Email Address</p>
-          <input v-model="userAccount" placeholder="Email" />
-          <p class="m-2">Password</p>
-          <input v-model="password" placeholder="Password" />
-          <br><br>
-          <button v-on:click="userLogin" class="btn btn-primary m-1">User Login</button>
-          <button @click="adminLogin" class="btn btn-secondary m-1">Admin Login</button>
+          <form  @submit.prevent>
+            <p class="m-2">Email Address</p>
+            <label for="email"
+              ><input v-model="userAccount" id="email" placeholder="Email" />
+            </label>
+            <p class="m-2">Password</p>
+            <label for="password"
+              ><input type="password" id="password" v-model="password" placeholder="Password" />
+            </label>
+            <br><br>
+            <button @click="userLogin" class="btn btn-primary m-1">User Login</button>
+            <button @click="adminLogin" class="btn btn-secondary m-1">Admin Login</button>
+          </form>
         </div>
         <br>
         <p>Don’t have an account? <router-link to="/register">Sign Up</router-link></p>
         <br>
       </div>
     </div>
-    <!-- <button @click="userTest">User Test</button>
-    <br>
-    <br>
+    <!-- The following buttoms are used for testing -->
+    <button @click="userTest">User Test</button>
     <button @click="adminTest">Amin Test</button>
-    <br>
-    <br>
-    <button @click="goToHomeAsGuest">Visit As Guest</button> -->
+    <button @click="goToHomeAsGuest">Visit As Guest</button>
   </section>
 </template>
 
@@ -64,7 +67,6 @@ export default {
         .post(ADMIN_LOGIN_URL, { admin_email: adminEmail, admin_password: adminPassword })
         .then((response) => {
           if (response.data.adminLoginSucceed) {
-            this.$store.dispatch('setAdminId', { admin_id: 1 });
             this.$store.dispatch('setIsLogIn', { isLogIn: true });
             this.$store.dispatch('setIsGuest', { isUser: false });
             this.$store.dispatch('setIsAdmin', { isAdmin: true });
@@ -104,7 +106,7 @@ header {
   margin: 3rem auto;
   border-radius: 10px;
   padding: 1rem;
-  background-color: #58004d;
+  background-color: #ff4c68;
   color: white;
   text-align: center;
   width: 80%;
@@ -113,7 +115,7 @@ header {
 .box {
   height: 40%;
   width: 33%;
-  margin: auto;
+  margin: 10% auto;
   position: relative;
   background-color: #FFF6EA;
   border-radius: 10px;

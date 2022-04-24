@@ -54,7 +54,7 @@ header {
   margin: 3rem auto;
   border-radius: 10px;
   padding: 1rem;
-  background-color: #58004d;
+  background-color: #ff4c68;
   color: white;
   text-align: center;
   width: 80%;
@@ -63,7 +63,7 @@ header {
 .box {
   height: 40%;
   width: 33%;
-  margin: auto;
+  margin: 0% auto;
   position: relative;
   background-color: #FFF6EA;
   border-radius: 10px;

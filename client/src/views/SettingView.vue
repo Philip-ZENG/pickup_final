@@ -1,6 +1,6 @@
 <template>
   <div class="personalInfo">
-    <div class="container-fluid p-4 bg-primary text-white">
+    <div class="container-fluid p-4 heading">
       <h1>Settings</h1>
     </div>
     <div class="card mx-auto m-4 w-50">
@@ -12,7 +12,7 @@
             <p>Origin Password</p>
             <input
               id="OriginPassword"
-              v-model="password"
+              v-model="originPassword"
               placeholder="original password"
               class="mt-2"
             />
@@ -45,15 +45,13 @@
       <h5 class="card-header text-center p-3">User Name</h5>
       <div class="card-body">
         <div id="alert" v-if="alert">{{ alert }}</div>
-        <form>
+        <form @submit.prevent="updateUserName">
           <label for="userName">
             <p>New User name</p>
             <input id="userName" v-model="userName" placeholder="Your new user name" class="mt-2" />
           </label>
           <br />
-          <button type="submit" class="mx-auto m-3" v-on:click="updateUserName">
-            Reset User Name
-          </button>
+          <button type="submit" class="mx-auto m-3">Reset User Name</button>
         </form>
       </div>
     </div>
@@ -62,7 +60,7 @@
       <h5 class="card-header text-center p-3">Contact</h5>
       <div class="card-body">
         <div id="alert" v-if="alert">{{ alert }}</div>
-        <form>
+        <form @submit.prevent="updateContact">
           <label for="contact">
             <p>New Contact</p>
             <input
@@ -73,9 +71,7 @@
             />
           </label>
           <br />
-          <button type="submit" class="mx-auto m-3" v-on:click="updateContact">
-            Reset contact
-          </button>
+          <button type="submit" class="mx-auto m-3">Reset contact</button>
         </form>
       </div>
     </div>
@@ -83,13 +79,13 @@
       <h5 class="card-header text-center p-3">Bio</h5>
       <div class="card-body">
         <div id="alert" v-if="alert">{{ alert }}</div>
-        <form>
+        <form @submit.prevent="updateBio">
           <label for="Bio">
             <p>New Bio</p>
             <input id="Bio" v-model="Bio" placeholder="Show Yourself more!" class="mt-2" />
           </label>
           <br />
-          <button type="submit" class="mx-auto m-3" v-on:click="updateBio">Update Bio</button>
+          <button type="submit" class="mx-auto m-3">Update Bio</button>
         </form>
       </div>
     </div>
@@ -99,10 +95,10 @@
 <script>
 const axios = require('axios').default;
 
-const SETTING_PASSWORD_URL = 'http://localhost:4000/setting/password';
-const SETTING_NAME_URL = 'http://localhost:4000/setting/name';
-const SETTING_CONTACT_URL = 'http://localhost:4000/setting/contact';
-const SETTING_BIO_URL = 'http://localhost:4000/setting/bio';
+const SETTING_PASSWORD_URL = 'http://localhost:4004/setting/password';
+const SETTING_NAME_URL = 'http://localhost:4004/setting/name';
+const SETTING_CONTACT_URL = 'http://localhost:4004/setting/contact';
+const SETTING_BIO_URL = 'http://localhost:4004/setting/bio';
 // Initialize Userfront
 // Userfront.init("demo1234");
 
@@ -128,52 +124,58 @@ export default {
   methods: {
     checkAndResetPassword() {
       this.alert = '';
-      // Verify that the passwords match
 
       if (this.password !== this.passwordVerify) {
         this.alert = 'Passwords must match';
-        // return;
       }
-      // Call Userfront.resetPassword()
-      // Userfront.resetPassword({
-      //   password: this.password,
-      // }).catch((error) => {
-      //   this.alert = error.message;
-      // });
     },
-    // checkOldPassword() {
-    //   if (this.originPassword !== oldPassword) {
-    //     this.alert = 'The Old Password is Incorrect!';
-    //     // return;
-    //   }
-    // },
 
     updatePassword() {
       const keyword = this.password;
       const id = this.$store.getters.getUserId;
-      axios.post(SETTING_PASSWORD_URL, { password: keyword, user_id: id });
-      setTimeout(this.pageUpdate(), 250);
+      axios.post(SETTING_PASSWORD_URL, { password: keyword, user_id: id }).then((response) => {
+        if (response.data.succeed) {
+          alert('Password successfully chaged!');
+        } else {
+          alert('Failed to update password');
+        }
+      });
     },
 
     updateUserName() {
       const userNewName = this.userName;
       const id = this.$store.getters.getUserId;
-      axios.post(SETTING_NAME_URL, { userName: userNewName, user_id: id });
-      setTimeout(this.pageUpdate(), 250);
+      axios.post(SETTING_NAME_URL, { userName: userNewName, user_id: id }).then((response) => {
+        if (response.data.succeed) {
+          alert('User name successfully chaged!');
+        } else {
+          alert('Failed to update user name');
+        }
+      });
     },
 
     updateContact() {
       const contactInfo = this.contact;
       const id = this.$store.getters.getUserId;
-      axios.post(SETTING_CONTACT_URL, { contact: contactInfo, user_id: id });
-      setTimeout(this.pageUpdate(), 250);
+      axios.post(SETTING_CONTACT_URL, { contact: contactInfo, user_id: id }).then((response) => {
+        if (response.data.succeed) {
+          alert('Contact info successfully chaged!');
+        } else {
+          alert('Failed to update contact info');
+        }
+      });
     },
 
     updateBio() {
       const BioInfo = this.Bio;
       const id = this.$store.getters.getUserId;
-      axios.post(SETTING_BIO_URL, { Bio: BioInfo, user_id: id });
-      setTimeout(this.pageUpdate(), 250);
+      axios.post(SETTING_BIO_URL, { Bio: BioInfo, user_id: id }).then((response) => {
+        if (response.data.succeed) {
+          alert('Personal description successfully chaged!');
+        } else {
+          alert('Failed to update personal description');
+        }
+      });
     },
   },
 };
@@ -183,20 +185,21 @@ export default {
 input {
   display: block;
   margin-bottom: 10px;
-  border:1px solid #ccc;
-  padding:7px 0px;
-  border-radius:7px;padding-left:5px;
-  -webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075);
-  box-shadow:inset 0 1px 1px rgba(0,0,0,.075);
-  -webkit-transition:border-color ease-in-out .15s,
-  -webkit-box-shadow ease-in-out .15s;
-  -o-transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-  transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s
-  }
-  input:focus{
-  border-color:#66afe9;outline:0;
-  -webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6);
-  box-shadow:inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(102,175,233,.6)
+  border: 1px solid #ccc;
+  padding: 7px 0px;
+  border-radius: 7px;
+  padding-left: 5px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
+  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+input:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
 }
 #alert {
   color: red;
@@ -214,5 +217,8 @@ button {
 }
 button:hover {
   background-color: #f89998;
+}
+.heading {
+  background-color: #FFF8D5;
 }
 </style>

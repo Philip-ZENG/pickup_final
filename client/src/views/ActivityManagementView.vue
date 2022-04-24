@@ -21,7 +21,7 @@ const axios = require('axios').default;
 
 const ACTIVITY_INFO_URL = 'http://localhost:4003/getActivityInfo';
 const USER_ROLE = 'http://localhost:4003/getUserRole';
-const DELETE_MEMBER = 'http://localhost:4003/quitActivity';
+const DELETE_MEMBER = 'http://localhost:4003/deleteMember';
 const CHANGE_MANAGER = 'http://localhost:4003/changeManager';
 const TERMINATE_ACTIVITY = 'http://localhost:4003/terminateActivity';
 const MEMBER_INFO = 'http://localhost:4003/getMemberInfo';
@@ -85,25 +85,49 @@ export default {
      * he can execute this action
      */
     deleteMember(userId) {
-      axios.post(DELETE_MEMBER, { activity_id: this.activity_id, user_id: userId });
+      axios
+        .post(DELETE_MEMBER, { activity_id: this.activity_id, user_id: userId })
+        .then((response) => {
+          if (response.data.succeed) {
+            alert('Member delete succeed!');
+          } else {
+            alert('Member delete faild');
+          }
+        });
     },
     /**
      * @description
      * Transfer the authority of activity manager to other member with provided new_manager_id
      */
     changeManager(newManagerId) {
-      axios.post(CHANGE_MANAGER, {
-        activity_id: this.activity_id,
-        new_manager_id: newManagerId,
-        old_manager_id: this.user_id[0],
-      });
+      axios
+        .post(CHANGE_MANAGER, {
+          activity_id: this.activity_id,
+          new_manager_id: newManagerId,
+          old_manager_id: this.user_id[0],
+        })
+        .then((response) => {
+          if (response.data.succeed) {
+            alert('Manager change succeed!');
+          } else {
+            alert('Manager change faild');
+          }
+        });
     },
     /**
      * @description
      * Terminate the whole activity, can only be triggered by activity manager
      */
     terminateActivity() {
-      axios.post(TERMINATE_ACTIVITY, { activity_id: this.activity_id });
+      axios
+        .post(TERMINATE_ACTIVITY, { activity_id: this.activity_id })
+        .then((response) => {
+          if (response.data.succeed) {
+            alert('Activity termination succeed!');
+          } else {
+            alert('Activity termination faild');
+          }
+        });
     },
     /**
      * @description

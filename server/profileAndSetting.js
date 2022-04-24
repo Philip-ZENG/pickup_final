@@ -58,7 +58,7 @@ app.post('/setting/password', function(req, res) {
         values: [password, user_id]
         }, function(err, results){
         console.log('Password Update { user_id: ' + user_id + ', new_password: ' + password + '}');
-        return callback({succeed: true});
+        res.json({succeed: true});
     });
 })
 
@@ -71,7 +71,7 @@ app.post('/setting/name', function(req, res) {
         values: [userName, user_id]
         }, function(err, results){
         console.log('Password Update { user_id: ' + user_id + ', new_user_name: ' + userName + '}');
-        return callback({succeed: true});
+        res.json({succeed: true});
     });
 })
 
@@ -84,7 +84,7 @@ app.post('/setting/contact', function(req, res) {
         values: [contact, user_id]
         }, function(err, results){
         console.log('Password Update { user_id: ' + user_id + ', new_contact: ' + contact + '}');
-        return callback({succeed: true});
+        res.json({succeed: true});
     });
 })
 
@@ -97,7 +97,7 @@ app.post('/setting/bio', function(req, res) {
         values: [Bio, user_id]
         }, function(err, results){
         console.log('Password Update { user_id: ' + user_id + ', new_Bio: ' + Bio + '}');
-        return callback({succeed: true});
+        res.json({succeed: true});
     });
 })
 

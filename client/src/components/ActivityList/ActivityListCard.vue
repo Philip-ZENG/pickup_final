@@ -12,7 +12,7 @@
       </div>
       <div class="col">
         <button
-          class="btn btn-primary"
+          class="btn btn-primary btn-lg"
           type="button"
           @click="toActivityManagement"
         >
@@ -50,4 +50,9 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.card {
+  border-radius: 10px;
+  padding: 1% 5%;
+}
+</style>

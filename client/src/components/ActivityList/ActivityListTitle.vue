@@ -16,3 +16,10 @@
     </div>
   </div>
 </template>
+
+<style scoped>
+.card {
+  border-radius: 10px;
+  padding: 1% 5%;
+}
+</style>

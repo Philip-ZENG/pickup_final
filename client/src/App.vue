@@ -3,7 +3,7 @@
     <section>
       <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd">
         <div class="container-fluid">
-          <a class="navbar-brand">PickUp</a>
+          <a class="navbar-brand the-brand" href="http://localhost:8080/#/">PickUp</a>
           <button
             class="navbar-toggler"
             type="button"
@@ -79,10 +79,10 @@
           </div>
           <ul style="list-style-type:none;">
             <li class="nav-item" v-if="getIsUser || getIsAdmin">
-              <button class="btn btn-primary" @click="logout">Logout</button>
+              <button class="btn btn-outline-primary btn-lg" @click="logout">Logout</button>
             </li>
             <li class="nav-item" v-if="getIsGuest">
-              <button class="btn btn-primary" @click="redirectToLogIn">Login</button>
+              <button class="btn btn-outline-primary btn-lg" @click="redirectToLogIn">Login</button>
             </li>
           </ul>
         </div>
@@ -115,7 +115,7 @@ export default {
       this.$store.dispatch('setIsAdmin', { isAdmin: false });
       this.$store.dispatch('setUserId', { userId: null });
       this.$store.dispatch('setIsGuest', { isGuest: true });
-      this.$router.push('/userHome');
+      this.$router.push('/');
     },
     redirectToLogIn() {
       this.$store.dispatch('setIsGuest', { isGuest: false });
@@ -126,6 +126,14 @@ export default {
 </script>
 
 <style>
+/* Import google fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Ubuntu&display=swap');
+
+.the-brand {
+  font-size: 3rem;
+  font-family: 'Montserrat', sans-serif;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

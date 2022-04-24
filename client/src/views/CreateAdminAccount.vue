@@ -3,22 +3,33 @@
     <div class="container-fluid p-4 bg-primary text-white">
       <h1>Create New Admin Account</h1>
     </div>
-    <br>
-    <form @submit.prevent="createAdminAccount">
-      <label for="admin_email"
-        >Admin Email <br> <input type="text" id="admin_email" v-model="admin_email"
-      /></label>
-      <br />
-      <br />
-      <label for="admin_password"
-        >Admin Password <br> <input type="password" id="admin_password" v-model="admin_password"
-      /></label>
-      <br />
-      <br />
-      <button class="btn btn-primary">Register</button>
-    </form>
-    <br>
-    <button class="btn btn-primary" @click="goToAdminAccouontManagement">Back</button>
+    <br />
+    <div class="card mx-auto m-4 create_account_block">
+      <form @submit.prevent="createAdminAccount">
+        <div class="row">
+          <div class="col-sm-6 p-4">
+            <h3>Admin Email</h3>
+          </div>
+          <div class="col-sm-6 p-4">
+            <label for="admin_email"
+              ><input type="text" id="admin_email" v-model="admin_email"
+            /></label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 p-4">
+            <h3>Admin Password</h3>
+          </div>
+          <div class="col-sm-6 p-4">
+            <label for="admin_password"
+              ><input type="password" id="admin_password" v-model="admin_password"
+            /></label>
+          </div>
+        </div>
+        <button class="btn btn-primary btn-lg">Register</button>
+      </form>
+    </div>
+    <button class="btn btn-primary btn-lg" @click="goToAdminAccouontManagement">Back</button>
   </section>
 </template>
 
@@ -54,3 +65,11 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.create_account_block {
+  border-radius: 20px;
+  padding: 2% 4%;
+  width: 50%;
+}
+</style>

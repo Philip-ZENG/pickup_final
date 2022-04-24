@@ -4,7 +4,7 @@
       <h1>Admin Account List</h1>
     </div>
     <br>
-    <button class="btn btn-primary" @click="createNewAdminAccount">
+    <button class="btn btn-primary btn-lg" @click="createNewAdminAccount">
       Create New Admin Account
     </button>
     <br />

@@ -126,6 +126,7 @@ app.get('/verify', function(req,res){
     }
 });
 
+
 function userLogin(email, password, callback) {
   connection.query({
     sql: 'SELECT * FROM `user_info` WHERE `email` = ?',
@@ -133,7 +134,7 @@ function userLogin(email, password, callback) {
   }, function(err, results) {
     console.log(results);
     if(results[0].password === password) {
-      return callback({matched: true});
+      return callback({matched: true, user_id: results[0].user_id});
     }
     else{
       return callback({matched: false});
@@ -145,7 +146,7 @@ function userLogin(email, password, callback) {
 app.post('/userLogin', function(req,res){
   userLogin(req.body.userAccount, req.body.password, function(response) {
     if(response.matched) {
-      res.json({userLoginSucceed: true});
+      res.json({userLoginSucceed: true, user_id: response.user_id});
     }
     else {
       res.json({userLoginSucceed: false});

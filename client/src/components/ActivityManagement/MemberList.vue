@@ -2,7 +2,7 @@
 <section>
   <div class="row">
     <div class="col-sm-5 p-3">
-      <h1>Member List</h1>
+      <h3>Member List</h3>
     </div>
     <div class="col-sm-7 p-3">
       <div v-if="!isManager">

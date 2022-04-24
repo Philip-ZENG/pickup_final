@@ -1,6 +1,6 @@
 <template>
 <div>
-  <div class="container-fluid p-4 bg-primary text-white">
+  <div class="container-fluid p-4 heading">
     <h1>Activity List</h1>
   </div>
   <div class="container mt-3" style="align: center;">
@@ -71,5 +71,8 @@ export default {
 .save_button {
   min-width: 110px;
   max-width: 110px;
+}
+.heading {
+  background-color: #FFF8D5;
 }
 </style>

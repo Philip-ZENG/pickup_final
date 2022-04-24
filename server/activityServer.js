@@ -64,7 +64,7 @@ function get_activity_info(activity_id,callback) {
     sql: 'SELECT * FROM `activity_info` WHERE `activity_id` = ?',
     values: [activity_id]
   }, function (err, results) {
-    console.log(results[0]);
+    // console.log(results[0]);
     return callback(results[0]);
   });
 }
@@ -203,7 +203,7 @@ function get_user_info(user_id, callback){
     sql: 'SELECT * FROM `user_info` WHERE `user_id` = ?',
     values: [user_id]
   }, function (err, results) {
-    console.log(results[0]);
+    // console.log(results[0]);
     return callback(results[0]);
   });
 }
@@ -271,7 +271,8 @@ app.post("/getActivityInfo", function(req, res){
  */
 app.post('/deleteMember', function(req,res){
   delete_member(req.body.user_id, req.body.activity_id, function(response) {
-    console.log('user_id: ' + req.body.user_id.toString() + ' quit activity_id: ' + req.body.activity_id.toString());
+    console.log('Delete user_id: ' + req.body.user_id.toString() + ' from activity_id: ' + req.body.activity_id.toString());
+    res.json({succeed: true});
   })
 });
 
@@ -281,6 +282,8 @@ app.post('/deleteMember', function(req,res){
  */
 app.post('/changeManager', function(req,res){
   change_manager(req.body.activity_id,req.body.new_manager_id, req.body.old_manager_id);
+  console.log('Change manager: { activity_id: ' + req.body.activity_id + ' old_manager: ' + req.body.old_manager_id + ' new_manager: ' + req.body.new_manager_id + ' }');
+  res.json({succeed: true});
 });
 
 /**
@@ -289,6 +292,8 @@ app.post('/changeManager', function(req,res){
  */
 app.post('/terminateActivity', function(req,res){
   terminate_activity(req.body.activity_id);
+  console.log('Terminate activity: activity_id: ' + req.body.activity_id);
+  res.json({succeed: true});
 });
 
 /**

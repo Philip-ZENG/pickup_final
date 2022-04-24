@@ -3,76 +3,79 @@
     <div class="container-fluid p-4 bg-primary text-white">
       <h1>User Management</h1>
     </div>
-    <br>
-    <div class="row">
-      <div class="col-sm-5 p-4">
-        <h2>User ID</h2>
-      </div>
-      <div class="col-sm-7 p-4">
-        <h2>{{ user_id }}</h2>
-      </div>
-    </div >
-    <div class="row">
-      <div class="col-sm-5 p-4">
-        <h2>Email</h2>
-      </div>
-      <div class="col-sm-7 p-4">
-        <h2>{{ email }}</h2>
-      </div>
-    </div >
-    <div class="row">
-      <div class="col-sm-5 p-4">
-        <h2>User Name</h2>
-      </div>
-      <div class="col-sm-7 p-4">
-        <h2>{{ user_name }}</h2>
-      </div>
-    </div >
-    <div class="row">
-      <div class="col-sm-5 p-4">
-        <h2>Gender</h2>
-      </div>
-      <div class="col-sm-7 p-4">
-        <h2>{{ gender }}</h2>
-      </div>
-    </div >
-    <div class="row">
-      <div class="col-sm-5 p-4">
-        <h2>Contact Info</h2>
-      </div>
-      <div class="col-sm-7 p-4">
-        <h2>{{ contact_info }}</h2>
-      </div>
-    </div >
-    <div class="row">
-      <div class="col-sm-5 p-4">
-        <h2>Personal Introduction</h2>
-      </div>
-      <div class="col-sm-7 p-4">
-        <h2>{{ Personal_intro }}</h2>
-      </div>
-    </div >
-    <br />
-    <div class="row">
-      <div class="col-sm-5 p-4">
-        <h2>Set New Password For User</h2>
-      </div>
-      <div class="col-sm-7 p-4">
-      <form @submit.prevent="setNewUserPassword">
-        <label for="user_id"><input type="password" v-model="new_user_password" /></label>
-        <button class="btn btn-primary m-2">Set</button>
-      </form>
-      </div>
-    </div >
-    <div class="row">
-      <div class="col-sm-5 p-4">
-        <h1>Action</h1>
-      </div>
-      <div class="col-sm-7 p-4">
-        <button class="btn btn-danger m-2" @click="deleteUser ">Delete</button>
-        <button class="btn btn-primary m-2" @click="toAdminConsole">Back</button>
-      </div>
-    </div >
+
+    <div class="card mx-auto m-4 user_info_block">
+      <div class="row">
+        <div class="col-sm-5 p-4">
+          <h3>User ID</h3>
+        </div>
+        <div class="col-sm-7 p-4">
+          <h3>{{ user_id }}</h3>
+        </div>
+      </div >
+      <div class="row">
+        <div class="col-sm-5 p-4">
+          <h3>Email</h3>
+        </div>
+        <div class="col-sm-7 p-4">
+          <h3>{{ email }}</h3>
+        </div>
+      </div >
+      <div class="row">
+        <div class="col-sm-5 p-4">
+          <h3>User Name</h3>
+        </div>
+        <div class="col-sm-7 p-4">
+          <h3>{{ user_name }}</h3>
+        </div>
+      </div >
+      <div class="row">
+        <div class="col-sm-5 p-4">
+          <h3>Gender</h3>
+        </div>
+        <div class="col-sm-7 p-4">
+          <h3>{{ gender }}</h3>
+        </div>
+      </div >
+      <div class="row">
+        <div class="col-sm-5 p-4">
+          <h3>Contact Info</h3>
+        </div>
+        <div class="col-sm-7 p-4">
+          <h3>{{ contact_info }}</h3>
+        </div>
+      </div >
+      <div class="row">
+        <div class="col-sm-5 p-4">
+          <h3>Personal Introduction</h3>
+        </div>
+        <div class="col-sm-7 p-4">
+          <h3>{{ Personal_intro }}</h3>
+        </div>
+      </div >
+    </div>
+    <div class="card mx-auto m-4 action_block">
+      <div class="row">
+        <div class="col-sm-5 p-4">
+          <h3>Set New Password For User</h3>
+        </div>
+        <div class="col-sm-7 p-4">
+        <form @submit.prevent="setNewUserPassword">
+          <label for="user_id"><input type="password" v-model="new_user_password" /></label>
+          <button class="btn btn-primary m-2 btn-lg">Set</button>
+        </form>
+        </div>
+      </div >
+      <div class="row">
+        <div class="col-sm-5 p-4">
+          <h3>Action</h3>
+        </div>
+        <div class="col-sm-7 p-4">
+          <button class="btn btn-danger m-2 btn-lg" @click="deleteUser ">Delete</button>
+          <button class="btn btn-primary m-2 btn-lg" @click="toAdminConsole">Back</button>
+        </div>
+      </div >
+    </div>
     <br>
   </section>
 </template>
@@ -181,3 +184,16 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.user_info_block {
+  border-radius: 30px;
+  padding: 0 5%;
+  width: 60%;
+}
+.action_block {
+  border-radius: 30px;
+  padding: 0 5%;
+  width: 60%;
+}
+</style>

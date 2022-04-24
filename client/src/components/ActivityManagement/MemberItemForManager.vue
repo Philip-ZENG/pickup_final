@@ -2,15 +2,15 @@
   <div class="btn-group">
     <button
       type="button"
-      class="btn btn-primary dropdown-toggle m-1"
+      class="btn btn-primary dropdown-toggle m-1 btn-lg"
       data-bs-toggle="dropdown"
       aria-expanded="false"
     >
       {{ memberName }}
     </button>
-    <ul class="dropdown-menu">
+    <ul class="dropdown-menu" v-if="showDropdown">
       <li>
-        <button class="dropdown-item" @click="deleteMember">Delete</button>
+        <button class="dropdown-item" @click="deleteAMember">Delete</button>
       </li>
       <li>
         <button class="dropdown-item" @click="modifyManager">
@@ -42,7 +42,9 @@ export default {
      * And when the user is activity manager
      */
     showDropdown() {
-      return this.memberId === this.userId && this.userRole === 'MANAGER';
+      console.log(this.memberId);
+      console.log(this.userId[0]);
+      return this.memberId !== this.userId[0];
     },
   },
   methods: {
@@ -54,16 +56,18 @@ export default {
       // eslint-disable-next-line
       if (confirm('Are you sure that you want to transfer your Manager identity to others?')) {
         this.changeManager(this.memberId);
+        this.$router.push('/activityList');
       }
     },
     /**
      * @description
      * Delete a member from an activity with provided activity_id
      */
-    deleteMember() {
+    deleteAMember() {
       // eslint-disable-next-line
-      if (confirm('Are you sure that you want to delete the member from this activity?')) {
+      if (confirm('Are you sure that you want to delete this member from this activity?')) {
         this.deleteMember(this.memberId);
+        this.$router.push('/activityList');
       }
     },
   },

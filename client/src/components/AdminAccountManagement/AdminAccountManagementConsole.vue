@@ -4,26 +4,50 @@
       <h1>Admin Account Management</h1>
     </div>
     <br>
-    <div>
-      <h3>Admin Id</h3>
-      <P>{{ admin_id }}</P>
+    <div class="card mx-auto m-4 admin_info_block">
+      <div class="row">
+        <div class="col-sm-5 p-3">
+          <h3>Admin Id</h3>
+        </div>
+        <div class="col-sm-5 p-3">
+          <h3>{{ admin_id }}</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-5 p-3">
+          <h3>Admin Email</h3>
+        </div>
+        <div class="col-sm-5 p-3">
+          <h3>{{ admin_email }}</h3>
+        </div>
+      </div>
     </div>
-    <div>
-      <h3>Admin Email</h3>
-      <P>{{ admin_email }}</P>
+
+    <div class="card mx-auto m-4 action_block">
+      <form @submit.prevent="setNewAdminPassword">
+        <div class="row">
+          <div class="col-sm-5 p-3">
+            <h3>Set New Password For Admin Account</h3>
+          </div>
+          <div class="col-sm-5 p-3">
+            <label for="user_id">
+            <input type="password" v-model="new_admin_password"
+            /></label>
+            <button class="btn btn-primary m-3 btn-lg">Set</button>
+          </div>
+        </div>
+      </form>
+
+      <div class="row">
+        <div class="col-sm-5 p-3">
+          <h3>Action</h3>
+        </div>
+        <div class="col-sm-5 p-3">
+          <button class="btn btn-danger btn-lg" @click="deleteAdmin">Delete</button>
+          <button class="btn btn-primary btn-lg" @click="toAdminAccountList">Back</button>
+        </div>
+      </div>
     </div>
-    <form @submit.prevent="setNewAdminPassword">
-      <h3>Set New Password For Admin Account</h3>
-      <label for="user_id">
-        <input type="password" v-model="new_admin_password"
-      /></label>
-      <button class="btn btn-primary m-3">Set</button>
-    </form>
-    <br />
-    <button class="btn btn-danger" @click="deleteAdmin">Delete</button>
-    <br />
-    <br />
-    <button class="btn btn-primary" @click="toAdminAccountList">Back</button>
   </section>
 </template>
 
@@ -114,3 +138,19 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.admin_info_block {
+  border-radius: 30px;
+  padding: 0 5%;
+  width: 60%;
+}
+.btn {
+  margin: 0 20px;
+}
+.action_block {
+  border-radius: 30px;
+  padding: 0 5%;
+  width: 60%;
+}
+</style>

@@ -1,7 +1,7 @@
 <template>
   <button
     type="button"
-    class="btn btn-primary m-1"
+    class="btn btn-primary m-1 btn-lg"
   >
     {{ memberName }}
   </button>

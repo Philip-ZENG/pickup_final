@@ -13,3 +13,11 @@
     </div>
   </div>
 </template>
+
+<style scoped>
+.card {
+  border-radius: 10px;
+  padding: 1% 5%;
+  margin: 1% 10%;
+}
+</style>
