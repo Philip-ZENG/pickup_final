@@ -1,9 +1,9 @@
 <template>
   <section>
     <div class="container-fluid p-4 heading" style="background-color: #9198e5;">
-      <h1>Activity Management</h1>
+      <h1 >Activity Management</h1>
     </div>
-    <div class="card mx-auto m-4 acctivity_info_block">
+    <div class="card mx-auto m-4 acctivity_info_block" >
       <div class="row">
         <div class="col-sm-5 p-3">
           <h3>Title</h3>
@@ -186,12 +186,12 @@ export default {
 
 <style scoped>
 .acctivity_info_block {
-  border-radius: 30px;
+  border-radius: 20px;
   padding: 0 5%;
   width: 60%;
 }
 .quota_info_block {
-  border-radius: 30px;
+  border-radius: 20px;
   padding: 0 5%;
   width: 60%;
 }

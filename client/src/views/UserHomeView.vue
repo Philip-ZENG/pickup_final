@@ -15,7 +15,7 @@
           <div>Now is: {{ nowDate }}</div>
         </td>
         <td id="create" align="center" style="background-color: #9198e5;">
-          <button id="createNew" @click="tryPost">+ Post a new event</button>
+          <button id="createNew" @click="tryPost" style="font-weight:bold">+ Post a new event</button>
         </td>
       </tr>
       <tr height="80px">

@@ -85,10 +85,10 @@
           </div>
           <ul style="list-style-type: none">
             <li class="nav-item" v-if="getIsUser || getIsAdmin">
-              <button class="btn btn-outline-primary btn-lg" @click="logout">Logout</button>
+              <button class="btn btn-outline-primary btn-lg" @click="logout" style="border-width:1.5px; font-weight:bolder">Logout</button>
             </li>
             <li class="nav-item" v-if="getIsGuest">
-              <button class="btn btn-outline-primary btn-lg" @click="redirectToLogIn">Login</button>
+              <button class="btn btn-outline-primary btn-lg" @click="redirectToLogIn" style="border-width:1.5px; font-weight:bolder">Login</button>
             </li>
           </ul>
         </div>

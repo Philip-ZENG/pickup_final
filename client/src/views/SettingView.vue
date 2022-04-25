@@ -82,7 +82,7 @@
         <form @submit.prevent="updateBio">
           <label for="Bio">
             <p>New Bio</p>
-            <input id="Bio" v-model="Bio" placeholder="Show Yourself more!" class="mt-2" />
+            <textarea id="Bio" v-model="Bio" placeholder="Show Yourself more!" class="mt-2" />
           </label>
           <br />
           <button type="submit" class="mx-auto m-3">Update Bio</button>
@@ -213,12 +213,33 @@ button {
   border: 0;
   font-size: 18px;
   box-sizing: content-box;
-  border-radius: 30px;
+  border-radius: 20px;
 }
 button:hover {
   background-color: #f89998;
 }
 .heading {
   background-color: #FFF8D5;
+}
+
+#Bio {
+  height: 300px;
+  width: 500px;
+  border: 1px solid #ccc;
+  padding: 7px 0px;
+  border-radius: 7px;
+  padding-left: 5px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
+  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+
+#Bio:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
 }
 </style>

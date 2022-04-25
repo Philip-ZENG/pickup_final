@@ -1,7 +1,7 @@
 <template>
   <section>
-    <div class="container-fluid p-4 bg-primary text-white">
-      <h1>Admin Account Management</h1>
+    <div class="container-fluid p-4" style="background-color: #9198e5;">
+      <h1 >Admin Account Management</h1>
     </div>
     <br>
     <div class="card mx-auto m-4 admin_info_block">
@@ -9,7 +9,7 @@
         <div class="col-sm-5 p-3">
           <h3>Admin Id</h3>
         </div>
-        <div class="col-sm-5 p-3">
+        <div class="col-sm-7 p-3">
           <h3>{{ admin_id }}</h3>
         </div>
       </div>
@@ -17,7 +17,7 @@
         <div class="col-sm-5 p-3">
           <h3>Admin Email</h3>
         </div>
-        <div class="col-sm-5 p-3">
+        <div class="col-sm-7 p-3">
           <h3>{{ admin_email }}</h3>
         </div>
       </div>
@@ -29,11 +29,11 @@
           <div class="col-sm-5 p-3">
             <h3>Set New Password For Admin Account</h3>
           </div>
-          <div class="col-sm-5 p-3">
+          <div class="col-sm-6 p-3">
             <label for="user_id">
-            <input type="password" v-model="new_admin_password"
+            <input type="password" v-model="new_admin_password" style="margin-left:100px"
             /></label>
-            <button class="btn btn-primary m-3 btn-lg">Set</button>
+            <button class="btn btn-primary m-3 btn-lg" style="height:40px; text-align:center">Set</button>
           </div>
         </div>
       </form>
@@ -42,9 +42,9 @@
         <div class="col-sm-5 p-3">
           <h3>Action</h3>
         </div>
-        <div class="col-sm-5 p-3">
-          <button class="btn btn-danger btn-lg" @click="deleteAdmin">Delete</button>
-          <button class="btn btn-primary btn-lg" @click="toAdminAccountList">Back</button>
+        <div class="col-sm-7 p-3">
+          <button class="btn btn-danger btn-lg" @click="deleteAdmin" style="width:100px">Delete</button>
+          <button class="btn btn-primary btn-lg" @click="toAdminAccountList" style="width:100px">Back</button>
         </div>
       </div>
     </div>
@@ -143,7 +143,7 @@ export default {
 .admin_info_block {
   border-radius: 30px;
   padding: 0 5%;
-  width: 60%;
+  width: 80%;
 }
 .btn {
   margin: 0 20px;
@@ -151,6 +151,26 @@ export default {
 .action_block {
   border-radius: 30px;
   padding: 0 5%;
-  width: 60%;
+  width: 80%;
+}
+
+input {
+  /* display: block; */
+  margin-bottom: 5px;
+  border: 1px solid #ccc;
+  padding: 7px 0px;
+  border-radius: 7px;
+  padding-left: 5px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
+  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+input:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
 }
 </style>

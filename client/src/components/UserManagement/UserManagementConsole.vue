@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div class="container-fluid p-4 bg-primary text-white">
+    <div class="container-fluid p-4"  style="background-color: #9198e5;">
       <h1>User Management</h1>
     </div>
 

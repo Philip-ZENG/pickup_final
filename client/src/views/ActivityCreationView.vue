@@ -3,7 +3,7 @@
     <tr height="125px" width="100%" class="heading p-4" style="background-color: #9198e5;">
       <td width="50%" align="right"><h1>Post a New Event</h1></td>
       <td width="50%" align="center">
-        <button class="postButton" @click="postActivity">Post</button>
+        <button class="postButton" @click="postActivity" style="font-weight:bold; font-size:20px">Post</button>
       </td>
     </tr>
     <tr height="75px" width="100%">
@@ -80,10 +80,10 @@
             otherNumSelected = true;
             number = null;"
         ></button>
-        <span>Other number</span>
+        <span>More</span>
         <input
           v-model="otherNumber"
-          style="width: 25px; height: 25px"
+          style="width: 25px; height: 25px; margin-left:5px"
           onkeyup="this.value=this.value.replace(/[^\d]/g,'')"
           :disabled="!otherNumSelected"
         />
@@ -96,7 +96,7 @@
         <input
           v-model="description"
           placeholder="Type in your activity description here ..."
-          style="width: 400px"
+          style="width: 400px "
         />
       </td>
     </tr>
@@ -328,14 +328,34 @@ export default {
   /* border-block-color: black; */
   /* font-size: 18px; */
   /* box-sizing: content-box; */
-  border-radius: 2px;
+  border-radius: 4px;
 }
 
 .chosen {
-  background-color: rgb(149, 193, 247);
+  background-color: rgb(173, 255, 173);
 }
 
 .heading {
   background-color: #FFF8D5;
+}
+
+input {
+  /* display: block; */
+  margin-bottom: 5px;
+  border: 1px solid #ccc;
+  padding: 7px 0px;
+  border-radius: 7px;
+  padding-left: 5px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-transition: border-color ease-in-out 0.15s, -webkit-box-shadow ease-in-out 0.15s;
+  -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+input:focus {
+  border-color: #66afe9;
+  outline: 0;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
 }
 </style>
