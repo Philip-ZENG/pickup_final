@@ -117,7 +117,7 @@ header {
   width: 33%;
   margin: 10% auto;
   position: relative;
-  background-color: #FFF6EA;
+  background-color: #eaf1ff;
   border-radius: 10px;
 }
 .container {

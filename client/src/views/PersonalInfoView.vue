@@ -3,7 +3,7 @@
     <div class="container-fluid p-4 heading">
       <h1>Personal Information</h1>
     </div>
-    <div class="card mx-auto m-4 account_info_block">
+    <div class="card mx-auto m-4 account_info_block" style="border-color: #9198e5; border-width: 2px">
       <div class="row">
         <div class="col-sm-6 p-4 mt-3">
           <h3 style="text-align: left">User ID</h3>
@@ -34,7 +34,7 @@
       </div>
     </div>
 
-    <div class="card mx-auto m-4 personal_info_block">
+    <div class="card mx-auto m-4 personal_info_block" style="border-color: #9198e5; border-width: 2px">
       <div class="row">
         <div class="col-sm-6 p-4">
           <h3 style="text-align: left">Gender</h3>
@@ -64,7 +64,7 @@
         </div>
       </div>
     </div>
-    <div class="card mx-auto m-4 image_block">
+    <div class="card mx-auto m-4 image_block" style="border-color: #9198e5; border-width: 2px">
       <div class="row">
         <div class="col-sm-6 image-box" >
           <h3 style="text-align: left">Image Profile</h3>
@@ -141,7 +141,8 @@ p {
   font-family: Arial;
 }
 .heading {
-  background-color: #fff8d5;
+  background-color: #9198e5;
+  /* background-image: linear-gradient(to bottom right, #9198e5, #64e6bf); */
 }
 .account_info_block {
   border-radius: 30px;

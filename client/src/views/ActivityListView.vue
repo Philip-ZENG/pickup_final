@@ -1,6 +1,6 @@
 <template>
 <div>
-  <div class="container-fluid p-4 heading">
+  <div class="container-fluid p-4 heading" style="background-color: #9198e5;">
     <h1>Activity List</h1>
   </div>
   <div class="container mt-3" style="align: center;">

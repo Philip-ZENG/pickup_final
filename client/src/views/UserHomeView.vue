@@ -9,12 +9,12 @@
     >
       <tr height="100px">
         <!--first row-->
-        <td id="welcome" align="center" colspan="2" border="0px" style="font-size: 20px">
+        <td id="welcome" align="center" colspan="2" border="0px" style="font-size: 20px; background-color: #9198e5">
           <div>Welcome to PickUp, Hope you can find friends here.</div>
           <br />
           <div>Now is: {{ nowDate }}</div>
         </td>
-        <td id="create" align="center">
+        <td id="create" align="center" style="background-color: #9198e5;">
           <button id="createNew" @click="tryPost">+ Post a new event</button>
         </td>
       </tr>
@@ -25,7 +25,7 @@
           <div class="rightSep">
             <select
               v-model="searchType"
-              style="height: 30px; margin-right: 10px; margin-left: 15px"
+              style="height: 30px; margin-right: 10px; margin-left: 15px; border-color: #9198e5; border-radius: 7px; border-width: 1.5px"
             >
               <option value="type">type</option>
               <option value="title">title</option>
@@ -37,7 +37,7 @@
         <td align="center" width="30%" class="p-3">
           <!--order bar-->
           <div class="rightSep" id="order-select">
-            <select v-model="searchOrder" style="height: 30px; margin-right: 10px">
+            <select v-model="searchOrder" style="height: 30px; margin-right: 10px; border-color: #9198e5; border-radius: 7px; border-width: 1.5px">
               <option disabled value="">Please select one</option>
               <option value="MostRecent">Most Recent</option>
             </select>
@@ -381,14 +381,15 @@ table {
   border: 0;
   font-size: 15px;
   box-sizing: content-box;
-  border-radius: 15px;
+  border-radius: 12px;
 }
 #createNew:hover {
   background-color: rgb(149, 193, 247);
 }
 #search1 {
-  border-radius: 15px;
-  background-color: rgb(149, 193, 247);
+  height: 27px;
+  border-radius: 7px;
+  background-color: rgb(131, 168, 253);
   color: black;
   border: 0;
   font-size: 15px;
@@ -401,7 +402,8 @@ table {
 }
 
 #search2 {
-  border-radius: 15px;
+  border-radius: 7px;
+  height: 27px;
   background-color: rgb(149, 193, 247);
   color: black;
   border: 0;
@@ -415,7 +417,8 @@ table {
 }
 
 #sort {
-  border-radius: 15px;
+  border-radius: 7px;
+  height: 27px;
   background-color: rgb(149, 193, 247);
   color: black;
   border: 0;
@@ -507,7 +510,8 @@ input:focus {
 }
 
 .tSearch {
-  border-radius: 15px;
+  border-radius: 7px;
+  height: 27px;
   background-color:rgb(149, 193, 247);
   border-width:0;
   height: 40px;

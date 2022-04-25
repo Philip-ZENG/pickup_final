@@ -1,7 +1,7 @@
 <template>
   <section>
     <section>
-      <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd">
+      <nav class="navbar navbar-expand-lg navbar-light" id="navigationBar">
         <div class="container-fluid">
           <router-link class="navbar-brand the-brand" to="/">PickUp</router-link>
           <button
@@ -138,6 +138,11 @@ export default {
 .the-brand {
   font-size: 3rem;
   font-family: 'Montserrat', sans-serif;
+}
+
+#navigationBar {
+  background-color: #64e6bf;
+  background-image: linear-gradient(to top, #9198e5, #64e6bf);
 }
 
 #app {

@@ -1,6 +1,6 @@
 <template>
   <div class="personalInfo">
-    <div class="container-fluid p-4 heading">
+    <div class="container-fluid p-4 heading" style="background-color: #9198e5;">
       <h1>Settings</h1>
     </div>
     <div class="card mx-auto m-4 w-50">
