@@ -66,16 +66,30 @@
     </div>
     <div class="card mx-auto m-4 image_block" style="border-color: #9198e5; border-width: 2px">
       <div class="row">
-        <div class="col-sm-6 image-box" >
+        <div class="col-sm-6 image-box">
           <h3 style="text-align: left">Image Profile</h3>
-          <br>
+          <br />
+          <!-- eslint-disable-next-line -->
+          <button class="btn btn-primary img-select-button btn-lg">Select Image</button>
+          <label for="file" class="image-select-lable">
+            <input
+              type="file"
+              accept="image/png"
+              id="file"
+              multiple="multiple"
+              class="image-select-input"
+            />
+          </label>
+          <br />
           <button class="btn btn-primary img-upload-button btn-lg" @click="uploadImage">
             Upload Your Image
           </button>
         </div>
 
         <div class="col-sm-6 p-4">
-          <div class="image-holder"></div>
+          <div class="image-holder">
+            <img :src="url" alt="" class="slt" />
+          </div>
         </div>
       </div>
     </div>
@@ -104,6 +118,7 @@ export default {
           personal_intro: null,
         },
       ],
+      url: null,
     };
   },
   methods: {
@@ -120,12 +135,36 @@ export default {
         });
     },
     uploadImage() {
-      // Up load your image
+      if (this.$store.getters.getIsUser) {
+        const image = document.querySelector('#file').files[0];
+        if (image === undefined) {
+          alert('Please first select one picture');
+        } else {
+          const formData = new FormData();
+          formData.append('image', image);
+          formData.append('user_id', this.user_id);
+          axios.post('http://localhost:4004/upload', formData).then((response) => {
+            // eslint-disable-next-line
+            this.url = 'data:image/png;base64,' + response.data;
+          });
+        }
+      } else {
+        alert('Please first log in.');
+        this.$router.push('/login');
+      }
+    },
+
+    getProfile() {
+      axios.post('http://localhost:4004/getProfile', { user_id: this.user_id }).then((response) => {
+        // eslint-disable-next-line
+        this.url = 'data:image/png;base64,' + response.data;
+      });
     },
   },
 
   mounted() {
     this.getUserInfo();
+    this.getProfile();
   },
 
   created() {
@@ -164,7 +203,7 @@ p {
 .image-holder {
   width: 200px;
   height: 200px;
-  background-color: bisque;
+  background-color: white;
   margin: auto;
 }
 .img-upload-button {
@@ -172,6 +211,29 @@ p {
   display: block;
 }
 .image-box {
-  padding-top: 70px;
+  padding-top: 30px;
+}
+.slt {
+  max-width: 200px;
+  max-height: 200px;
+  border-radius: 50%;
+}
+.img-select-button {
+  position: relative;
+  display: block;
+}
+.image-select-lable {
+  position: absolute;
+  bottom:42%;
+  border: solid;
+  border-width: 3px;
+  opacity: 0;
+  width: 150px;
+  height: 50px;
+  display: block;
+}
+.image-select-input {
+  width: 150px;
+  height: 50px;
 }
 </style>
