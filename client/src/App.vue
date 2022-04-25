@@ -3,7 +3,7 @@
     <section>
       <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd">
         <div class="container-fluid">
-          <a class="navbar-brand the-brand" href="http://localhost:8080/#/">PickUp</a>
+          <router-link class="navbar-brand the-brand" to="/">PickUp</router-link>
           <button
             class="navbar-toggler"
             type="button"
@@ -19,7 +19,7 @@
           <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav" v-if="getIsUser">
               <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="http://localhost:8080/#/userHome">Home</a>
+                <router-link class="nav-link" to="/userHome">Home</router-link>
               </li>
               <li class="nav-item dropdown">
                 <a
@@ -34,13 +34,13 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                   <li>
-                    <a class="dropdown-item" href="http://localhost:8080/#/activityCreation"
-                      >Create Activity</a
+                    <router-link class="dropdown-item" to="/activityCreation"
+                      >Create Activity</router-link
                     >
                   </li>
                   <li>
-                    <a class="dropdown-item" href="http://localhost:8080/#/activityList"
-                      >My Activity List</a
+                    <router-link class="dropdown-item" to="/activityList"
+                      >My Activity List</router-link
                     >
                   </li>
                 </ul>
@@ -58,26 +58,32 @@
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                   <li>
-                    <a class="dropdown-item" href="http://localhost:8080/#/personalInfo"
-                      >Personal Information</a
+                    <router-link class="dropdown-item" to="/personalInfo"
+                      >Personal Information</router-link
                     >
                   </li>
                   <li>
-                    <a class="dropdown-item" href="http://localhost:8080/#/setting">Setting</a>
+                    <router-link class="dropdown-item" to="/setting"
+                      >Setting</router-link
+                    >
                   </li>
                 </ul>
               </li>
             </ul>
             <ul class="navbar-nav" v-if="getIsAdmin">
               <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="http://localhost:8080/#/adminConsole">Manage User Account</a>
+                <router-link class="nav-link" to="/adminConsole"
+                  >Manage User Account</router-link
+                >
               </li>
               <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="http://localhost:8080/#/adminAccountList">Manage Admin Account</a>
+                <router-link class="nav-link" to="/adminAccountList"
+                  >Manage Admin Account</router-link
+                >
               </li>
             </ul>
           </div>
-          <ul style="list-style-type:none;">
+          <ul style="list-style-type: none">
             <li class="nav-item" v-if="getIsUser || getIsAdmin">
               <button class="btn btn-outline-primary btn-lg" @click="logout">Logout</button>
             </li>
