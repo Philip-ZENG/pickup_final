@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div class="container-fluid p-4 heading" style="background-color: #9198e5;">
+    <div class="container-fluid p-4 heading" style="background-color: #b0fce5; background-image: linear-gradient(to bottom,#b0fce5, white)">
       <h1 >Activity Management</h1>
     </div>
     <div class="card mx-auto m-4 acctivity_info_block" >

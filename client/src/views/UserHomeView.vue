@@ -9,12 +9,12 @@
     >
       <tr height="100px">
         <!--first row-->
-        <td id="welcome" align="center" colspan="2" border="0px" style="font-size: 20px; background-color: #9198e5">
+        <td id="welcome" align="center" colspan="2" border="0px" style="font-size: 20px; background-color: #b0fce5; background-image: linear-gradient(to bottom,#b0fce5, white)">
           <div>Welcome to PickUp, Hope you can find friends here.</div>
           <br />
           <div>Now is: {{ nowDate }}</div>
         </td>
-        <td id="create" align="center" style="background-color: #9198e5;">
+        <td id="create" align="center" style="background-color: #b0fce5; background-image: linear-gradient(to bottom,#b0fce5, white)">
           <button id="createNew" @click="tryPost" style="font-weight:bold">+ Post a new event</button>
         </td>
       </tr>
@@ -449,14 +449,6 @@ input:focus {
   outline: 0;
   -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
-}
-
-#welcome {
-  background-color: #FFF8D5;
-}
-
-#create {
-  background-color: #FFF8D5;
 }
 
 .rightSep {

@@ -1,6 +1,6 @@
 <template>
   <table class="showTable" cellspacing="0" cellpadding="0" align="center">
-    <tr height="125px" width="100%" class="heading p-4" style="background-color: #9198e5;">
+    <tr height="125px" width="100%" class="heading p-4" style="background-color: #b0fce5; background-image: linear-gradient(to bottom,#b0fce5, white)">
       <td width="50%" align="right"><h1>Post a New Event</h1></td>
       <td width="50%" align="center">
         <button class="postButton" @click="postActivity" style="font-weight:bold; font-size:20px">Post</button>
@@ -336,7 +336,8 @@ export default {
 }
 
 .heading {
-  background-color: #FFF8D5;
+  background-color: #b0fce5;
+  background-image: linear-gradient(to bottom,#b0fce5, white);
 }
 
 input {

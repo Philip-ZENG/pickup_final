@@ -1,6 +1,6 @@
 <template>
 <div>
-  <div class="container-fluid p-4 heading" style="background-color: #9198e5;">
+  <div class="container-fluid p-4 heading" style="background-color: #b0fce5; background-image: linear-gradient(to bottom,#b0fce5, white)">
     <h1>Activity List</h1>
   </div>
   <div class="container mt-3" style="align: center;">
@@ -73,6 +73,7 @@ export default {
   max-width: 110px;
 }
 .heading {
-  background-color: #FFF8D5;
+  background-color: #b0fce5;
+  background-image: linear-gradient(to bottom,#b0fce5, white);
 }
 </style>

@@ -141,9 +141,10 @@ p {
   font-family: Arial;
 }
 .heading {
-  background-color: #9198e5;
-  /* background-image: linear-gradient(to bottom right, #9198e5, #64e6bf); */
+  background-color: #b0fce5;
+  background-image: linear-gradient(to bottom,#b0fce5, white);
 }
+
 .account_info_block {
   border-radius: 30px;
   padding: 0 5%;

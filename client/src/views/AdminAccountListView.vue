@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div class="container-fluid p-4" style="background-color: #9198e5;">
+    <div class="container-fluid p-4" style="background-color: #b0fce5; background-image: linear-gradient(to bottom,#b0fce5, white)">
       <h1>Admin Account List</h1>
     </div>
     <br>

@@ -142,7 +142,7 @@ export default {
 
 #navigationBar {
   background-color: #64e6bf;
-  background-image: linear-gradient(to top, #9198e5, #64e6bf);
+  background-image: linear-gradient(to bottom, #9198e5, #64e6bf);
 }
 
 #app {

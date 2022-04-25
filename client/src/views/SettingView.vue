@@ -1,6 +1,7 @@
 <template>
   <div class="personalInfo">
-    <div class="container-fluid p-4 heading" style="background-color: #9198e5;">
+    <div class="container-fluid p-4 heading">
+      <!-- style="background-image: linear-gradient(to bottom, #64e6bf, #9198e5)" -->
       <h1>Settings</h1>
     </div>
     <div class="card mx-auto m-4 w-50">
@@ -219,7 +220,8 @@ button:hover {
   background-color: #f89998;
 }
 .heading {
-  background-color: #FFF8D5;
+  background-color: #b0fce5;
+  background-image: linear-gradient(to bottom,#b0fce5, white);
 }
 
 #Bio {
