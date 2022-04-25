@@ -4,8 +4,12 @@ const bodyParser = require("body-parser");
 const mysql = require("mysql");
 const morgan = require("morgan");
 const { func } = require("joi");
+const multer = require("multer");
+const path = require("path");
+const fs = require("fs");
 
 const app = express();
+const upload = multer({});
 
 app.use(morgan("tiny"));
 app.use(cors());
@@ -32,6 +36,39 @@ connection.connect(function (err) {
   if (err) throw err;
   console.log('mySQL server connection succeed.')
 });
+
+
+app.post("/upload", upload.single("image"), async (req,res)=>{
+  const {buffer, mimetype, encoding, originalname, fieldname, size} = req.file;
+  const extName = mimetype.split("/")[1];
+  const ext = req.file.mimetype.split("/")[1];
+  const profilePath = path.join(__dirname, "./public/img/" + req.body.user_id + "." + ext)
+  fs.writeFile(profilePath, buffer, (err) => {
+    if(err){
+      console.log(err);
+    } else {
+      const base64 = fs.readFileSync(profilePath, 'base64') // 文件流并转 base64
+      res.send(base64);
+    }
+  })
+})
+
+
+app.post("/getProfile", (req, res) => {
+  const profilePath = path.join(__dirname, "./public/img/" + req.body.user_id + ".png")
+  fs.exists(profilePath, function(exists) {
+    if(exists){
+      const base64 = fs.readFileSync(profilePath, 'base64') // 文件流并转 base64
+      res.send(base64);
+    } else {
+      const defaultPath = path.join(__dirname, "./public/img/" + "default.png");
+      const base64 = fs.readFileSync(defaultPath, 'base64') // 文件流并转 base64
+      res.send(base64);
+    }
+  })
+  // const base64 = fs.readFileSync(profilePath, 'base64') // 文件流并转 base64
+  // res.send(base64);
+})
 
 function getUserInfo(user_id, callback) {
     connection.query({
